@@ -1,70 +1,78 @@
-# React + TypeScript + Vite
+✨ eden-admin-frontend ✨
+¡Bienvenido al proyecto eden-admin-frontend! Este es un panel de administración robusto y moderno, construido con las últimas tecnologías frontend para ofrecer una experiencia de usuario excepcional y un desarrollo eficiente.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Tecnologías Clave
+Este proyecto está construido con:
 
-Currently, two official plugins are available:
+React: Una biblioteca de JavaScript para construir interfaces de usuario interactivas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+TypeScript: Un superconjunto de JavaScript que añade tipado estático para un código más robusto y mantenible.
 
-## Expanding the ESLint configuration
+Vite: Un bundler de próxima generación que ofrece una experiencia de desarrollo extremadamente rápida.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+ShadcnUI: Un conjunto de componentes de interfaz de usuario hermosos y accesibles, construidos con Tailwind CSS y Radix UI.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+📦 Estructura de Variables de Entorno
+Para una gestión flexible de las configuraciones, todas las variables de entorno que comienzan con VITE_ se cargan desde la carpeta env/. Necesitarás crear los siguientes archivos dentro de esta carpeta:
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+eden-admin-frontend/
+├─ env/
+│  ├─ .env.development    # Variables para desarrollo local
+│  ├─ .env.debug          # Variables para modo debug / staging
+│  └─ .env.production     # Variables para producción
+├─ src/
+└─ vite.config.ts
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Cada archivo .env.<mode> debe incluir al menos las variables necesarias para su entorno específico.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+⚠️ ¡IMPORTANTE: Seguridad de Credenciales! ⚠️
+NUNCA incluyas tokens, claves API o credenciales sensibles directamente en tu repositorio Git. Para secretos de producción, utiliza tu pipeline de CI/CD o un gestor de secretos dedicado (como HashiCorp Vault, Azure Key Vault, AWS Secrets Manager, etc.) y pásalos como variables de entorno en tiempo de ejecución.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+⚙️ Scripts Disponibles
+En el archivo package.json, encontrarás los siguientes comandos útiles para el desarrollo y la construcción del proyecto:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# eden-admin-frontend
+npm run dev: Levanta el servidor de desarrollo local (utiliza env/.env.development).
+
+npm run dev:debug: Inicia el servidor en modo debug/staging (utiliza env/.env.debug).
+
+npm run build: Compila el proyecto para producción (utiliza env/.env.production).
+
+npm run build:staging: Compila el proyecto en modo staging/debug.
+
+npm run preview: Sirve la carpeta dist para una vista previa de la compilación.
+
+npm run lint: Ejecuta el linter para verificar el estilo y la calidad del código.
+
+npm run test: Ejecuta los tests del proyecto.
+
+🏁 Cómo Arrancar el Proyecto
+Sigue estos sencillos pasos para poner el proyecto en marcha en tu máquina local:
+
+1. Instala Dependencias
+Abre tu terminal en la raíz del proyecto y ejecuta:
+
+npm install
+
+2. Configura tus Archivos .env
+Copia el archivo env/.env.development.example (o similar, si existe) a env/.env.development y ajusta las URLs, tenant o token según tus necesidades.
+
+Si necesitas sobrescribir algún secreto específicamente para tu máquina local sin afectar el repositorio, puedes crear un archivo .env.local en la raíz del proyecto. Las variables definidas aquí tendrán prioridad.
+
+3. Arranca en Desarrollo
+Una vez que las dependencias estén instaladas y tus variables de entorno configuradas, inicia el servidor de desarrollo:
+
+npm run dev
+
+4. Abre tu Navegador
+Una vez que el servidor esté en ejecución, abre tu navegador web y visita la siguiente URL para ver la aplicación:
+
+http://localhost:5173
+
+(O el puerto que Vite te indique en la terminal).
+
+📖 Cómo Funciona la Carga de Entornos
+El archivo vite.config.ts está configurado para manejar la carga de variables de entorno de manera inteligente:
+
+Según el mode pasado (por ejemplo, development, debug, production), Vite cargará automáticamente el archivo correspondiente .env.<mode> de la carpeta env/. Todas las variables definidas en estos archivos se expondrán en tu código como import.meta.env.VITE_NOMBRE_DE_TU_VARIABLE.
+
+¡Esperamos que disfrutes desarrollando con eden-admin-frontend! Si tienes alguna pregunta o encuentras algún problema, no dudes en consultar la documentación o contactar al equipo.
