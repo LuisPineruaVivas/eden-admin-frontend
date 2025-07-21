@@ -28,6 +28,7 @@ export default ({ mode }: ConfigEnv) => {
         "@core": path.resolve(__dirname, "./src/core"),
         "@store": path.resolve(__dirname, "./src/config/store"),
         "@layouts": path.resolve(__dirname, "./src/layouts"),
+        "@interface": path.resolve(__dirname, "./src/interface"),
       },
     },
   })

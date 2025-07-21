@@ -114,7 +114,7 @@ export function LoginForm({
                   </span>
                 )}
               </div>
-              <Button type="submit" className="w-full" disabled={isPending}>
+              <Button type="submit" className="w-full cursor-pointer" disabled={isPending}>
                 {isPending
                   ? t("translation.login.loading", "Cargando...")
                   : t("translation.login.continue")}

@@ -56,7 +56,11 @@
         "buttonback": "Volver",
         "buttonhome": "Inicio"
        }
+      },
+      "logout": {
+        "success": "Has cerrado sesión correctamente."
       }
+      
     }
     
     

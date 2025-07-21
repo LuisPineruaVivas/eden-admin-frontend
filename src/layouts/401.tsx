@@ -10,7 +10,7 @@ export default function Error401() {
   }
 
   const handleGoBack = () => {
-    window.history.back()
+    window.location.href = "/"
   }
 
   const handleLogin = () => {

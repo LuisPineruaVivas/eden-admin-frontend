@@ -5,7 +5,10 @@ interface PutResponse<T> extends AxiosResponse<T> {
 }
 
 type PutFunction = <T>(
-  url: string
+  url: string,
+  body?: unknown,
+  token?: string,
+  headers?: Record<string, string>
 ) => Promise<PutResponse<T>>;
 
 export const PUT: PutFunction = async <T>(
