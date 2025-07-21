@@ -28,6 +28,7 @@
   "path": "cz-conventional-changelog",
   "dependencies": {
     "@floating-ui/react": "^0.27.12",
+    "@hookform/resolvers": "^5.1.1",
     "@loadable/component": "^5.16.7",
     "@mantine/hooks": "^8.1.2",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -59,6 +60,7 @@
     "react": "^19.1.0",
     "react-confetti": "^6.4.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.60.0",
     "react-i18next": "^15.5.3",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.2",
@@ -67,7 +69,8 @@
     "shadcn": "^2.7.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.10",
-    "tsc-alias": "^1.8.16"
+    "tsc-alias": "^1.8.16",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
