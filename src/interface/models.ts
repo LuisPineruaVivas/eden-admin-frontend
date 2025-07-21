@@ -65,3 +65,14 @@ export interface IUser {
   created_at: string;
   permissions: Permissions[];
 }
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  user: IUser;
+  error?: string;
+}

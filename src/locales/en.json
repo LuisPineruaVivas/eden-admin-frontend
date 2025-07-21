@@ -8,7 +8,8 @@
         "password": "Password",
         "forgot_password": "Forgot your password?",
         "terms_of_service": "Terms of Service",
-        "privacy_policy": "Privacy Policy"
+        "privacy_policy": "Privacy Policy",
+        "success": "Login successful!"
       },
       "layoutsError": {
        "error500":{

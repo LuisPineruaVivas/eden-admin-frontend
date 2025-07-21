@@ -761,6 +761,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "@hookform/resolvers@npm:5.1.1"
+  dependencies:
+    "@standard-schema/utils": "npm:^0.3.0"
+  peerDependencies:
+    react-hook-form: ^7.55.0
+  checksum: 10c0/74601ba4abb3159bbaa25175af9459a2c0337a28d8c0a5be95c7ae7b0a76ddafcf63c03eea8561fd099fe80b226194ad09e3824c53b9beda38393ff9fd264a03
+  languageName: node
+  linkType: hard
+
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -3976,6 +3987,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.29.0"
     "@floating-ui/react": "npm:^0.27.12"
+    "@hookform/resolvers": "npm:^5.1.1"
     "@loadable/babel-plugin": "npm:^5.16.1"
     "@loadable/component": "npm:^5.16.7"
     "@loadable/webpack-plugin": "npm:^5.15.2"
@@ -4025,6 +4037,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-confetti: "npm:^6.4.0"
     react-dom: "npm:^19.1.0"
+    react-hook-form: "npm:^7.60.0"
     react-i18next: "npm:^15.5.3"
     react-redux: "npm:^9.2.0"
     react-router-dom: "npm:^7.6.2"
@@ -4038,6 +4051,7 @@ __metadata:
     typescript: "npm:~5.8.3"
     typescript-eslint: "npm:^8.35.0"
     vite: "npm:6.0.0"
+    zod: "npm:^4.0.5"
   languageName: unknown
   linkType: soft
 
@@ -7542,6 +7556,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.60.0":
+  version: 7.60.0
+  resolution: "react-hook-form@npm:7.60.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10c0/eb8518d42a074d9e115d4b414bac18ae72708b2d047a9453dcc7588b00df300b32cebf6ecb7f2c8aa534808b3dc54bde4124af95c1e432b6691f9aba07c93b11
+  languageName: node
+  linkType: hard
+
 "react-i18next@npm:^15.5.3":
   version: 15.6.0
   resolution: "react-i18next@npm:15.6.0"
@@ -9413,5 +9436,12 @@ __metadata:
   version: 3.25.74
   resolution: "zod@npm:3.25.74"
   checksum: 10c0/59e38b046ac333b5bd1ba325a83b6798721227cbfb1e69dfc7159bd7824b904241ab923026edb714fafefec3624265ae374a70aee9a5a45b365bd31781ffa105
+  languageName: node
+  linkType: hard
+
+"zod@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "zod@npm:4.0.5"
+  checksum: 10c0/59449d731ca63849b6bcb14300aa6e2f042d440b3ed294b45c248519aec78780f85a5d1939a62c2ce82e9dc60afca77c8005e0a98d7517b0c2586d6c76940424
   languageName: node
   linkType: hard
