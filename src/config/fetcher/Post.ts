@@ -9,7 +9,6 @@ type PostFunction = <T>(
   body?: unknown,
   token?: string,
   headers?: Record<string, string>
-
 ) => Promise<PostResponse<T>>;
 
 export const POST: PostFunction = async <T>(
