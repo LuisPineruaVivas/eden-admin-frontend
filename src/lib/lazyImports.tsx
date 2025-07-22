@@ -7,13 +7,13 @@ const createPageLoader = (importFn: () => Promise<{ default: React.ComponentType
 const pageMap: Record<string, () => Promise<{ default: React.ComponentType }>> = {
   
   //Entradas publicas
-  login: () => import('@pages/Login/index'),
+  login: () => import('@pages/Login'),
 
   //Dashboard Summary
-  summary: () => import('@pages/Summary/Index'),
+  summary: () => import('@pages/Summary'),
   
   //Modulo de
-  management: () => import('@pages/management/index'),
+  management: () => import('@pages/Management'),
 
 
   //Layouts de errores.
