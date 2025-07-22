@@ -16,10 +16,10 @@ ShadcnUI: Un conjunto de componentes de interfaz de usuario hermosos y accesible
 Para una gestión flexible de las configuraciones, todas las variables de entorno que comienzan con VITE_ se cargan desde la carpeta env/. Necesitarás crear los siguientes archivos dentro de esta carpeta:
 
 eden-admin-frontend/
-├─ env/
-│  ├─ .env.development    # Variables para desarrollo local
-│  ├─ .env.debug          # Variables para modo debug / staging
-│  └─ .env.production     # Variables para producción
+├─
+├─ .env.development    # Variables para desarrollo local
+├─ .env.debug          # Variables para modo debug / staging
+├─ .env.production     # Variables para producción
 ├─ src/
 └─ vite.config.ts
 
@@ -51,7 +51,11 @@ Sigue estos sencillos pasos para poner el proyecto en marcha en tu máquina loca
 1. Instala Dependencias
 Abre tu terminal en la raíz del proyecto y ejecuta:
 
-npm install
+1. Instala Dependencias
+   Abre tu terminal en la raíz del proyecto y ejecuta:
+   ```bash
+   yarn install
+   ```
 
 2. Configura tus Archivos .env
 Copia el archivo env/.env.development.example (o similar, si existe) a env/.env.development y ajusta las URLs, tenant o token según tus necesidades.
@@ -61,7 +65,11 @@ Si necesitas sobrescribir algún secreto específicamente para tu máquina local
 3. Arranca en Desarrollo
 Una vez que las dependencias estén instaladas y tus variables de entorno configuradas, inicia el servidor de desarrollo:
 
-npm run dev
+3. Arranca en Desarrollo
+   Una vez que las dependencias estén instaladas y tus variables de entorno configuradas, inicia el servidor de desarrollo:
+   ```bash
+   yarn dev
+   ```
 
 4. Abre tu Navegador
 Una vez que el servidor esté en ejecución, abre tu navegador web y visita la siguiente URL para ver la aplicación:
@@ -69,6 +77,12 @@ Una vez que el servidor esté en ejecución, abre tu navegador web y visita la s
 http://localhost:5173
 
 (O el puerto que Vite te indique en la terminal).
+4. Abre tu Navegador
+   Una vez que el servidor esté en ejecución, abre tu navegador web y visita la siguiente URL para ver la aplicación:
+   ```
+   http://localhost:5173
+   ```
+   (O el puerto que Vite te indique en la terminal).
 
 📖 Cómo Funciona la Carga de Entornos
 El archivo vite.config.ts está configurado para manejar la carga de variables de entorno de manera inteligente:

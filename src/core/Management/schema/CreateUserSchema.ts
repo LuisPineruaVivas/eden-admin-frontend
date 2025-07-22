@@ -1,0 +1,1 @@
+// Schema para validaciones ZOD, luego se importan para validar formularios.

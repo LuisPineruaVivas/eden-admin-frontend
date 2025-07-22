@@ -56,6 +56,9 @@
         "buttonback": "Back",
         "buttonhome": "Home"
        }
+      },
+      "logout": {
+        "success": "You have logged out successfully."
       }
     }
 }

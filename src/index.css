@@ -118,3 +118,29 @@
     @apply bg-background text-foreground;
   }
 }
+@keyframes custom-slide-in-right {
+  from {
+    transform: translateX(calc(100% + 1rem));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes custom-slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
+/* Clase que aplica las animaciones basadas en el estado */
+.custom-toast-animation[data-state='open'] {
+  animation: custom-slide-in-right 300ms ease-out;
+}
+
+.custom-toast-animation[data-state='closed'] {
+  animation: custom-slide-out-left 400ms ease-in forwards;
+}

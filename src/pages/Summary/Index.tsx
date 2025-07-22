@@ -1,8 +1,8 @@
-import SummaryHeader from "@/core/Summary/SummaryMain";
+import DashboardSummary from "@core/Summary/DashboardSummary";
 
 function LoginPage() {
   return (
-        <SummaryHeader></SummaryHeader>
+        <DashboardSummary></DashboardSummary>
   );
 }
 

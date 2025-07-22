@@ -14,7 +14,7 @@ export default function Error404() {
   }
 
   const handleGoBack = () => {
-    window.history.back()
+    window.location.href = "/"
   }
 
   const { t } = useTranslation("common")

@@ -5,7 +5,9 @@ interface GetResponse<T> extends AxiosResponse<T> {
 }
 
 type GetFunction = <T>(
-  url: string
+  url: string,
+  token?: string,
+  headers?: Record<string, string>
 ) => Promise<GetResponse<T>>;
 
 export const GET: GetFunction = async <T>(

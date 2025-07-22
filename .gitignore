@@ -24,3 +24,6 @@ dist-ssr
 .yarn
 env
 src/env/*
+.env.development
+.env.production
+.env.debug
