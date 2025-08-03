@@ -1,27 +1,46 @@
-import { Routes, Route } from 'react-router-dom';
-import { DynamicPage } from '@/lib/lazyImports';
-import { PermissionBasedRoute } from '@/components/PermissionBasedRoute';
-import { UserPermission } from '@/interface/permissions';
+import loadable from '@loadable/component'
+import { PageSkeleton } from '@/components/ui/PageSkeleton'
+import { RoleBasedRoute } from '@/components/RoleBaseRoute'
+import { RouteConfig } from '../types'
 
-export default function ManagementModulePage() {
-  return (
-    <Routes>
-      {/* Dashboard del módulo */}
-      <Route index element={<DynamicPage page="managementDashboard" />} />
+const ManagementPage = loadable(() => import('@/pages/Management'), { 
+  fallback: <PageSkeleton />, 
+  ssr: false 
+})
+// const UserCreate = loadable(() => import('@/core/Management/UserCreate.form'), {
+//   fallback: <PageSkeleton />,
+//   ssr: false
+// })
 
-      {/* Rutas de usuarios */}
-      <Route element={<PermissionBasedRoute requiredPermission={UserPermission.VIEW_USERS} />}>
-        <Route path="users" element={<DynamicPage page="managementUserList" />} />
-        <Route path="users/:userId" element={<DynamicPage page="managementUserDetail" />} />
-      </Route>
+const managementRoutes: RouteConfig[] = [
+  {
+    path: '/management',
+    element: <RoleBasedRoute allowedRoles={['Admin', 'Manager', 'Coordinator', 'Analyst']} />, //Revisar los roles que pueden acceder a esta pagina
+    meta: {
+      title: 'Management'
+    },
+    children: [
+      {
+        path: '',
+        element: <ManagementPage />,
+        meta: {
+          title: 'Management Dashboard'
+        }
+        // children: [
+        //   { 
+        //     path: '/users', 
+        //     element: <PermissionBasedRoute requiredPermission={UserPermission.VIEW_USERS} />,
+        //     meta: { title: 'Users' }
+        //   },
+        //   { 
+        //     path: '/users/:id', 
+        //     element: <PermissionBasedRoute requiredPermission={UserPermission.EDIT_USERS} />,
+        //     meta: { title: 'Edit User' }
+        //   },
+        // ],
+      },
+    ],
+  },
+]
 
-      <Route element={<PermissionBasedRoute requiredPermission={UserPermission.CREATE_USER} />}>
-        <Route path="users/create" element={<DynamicPage page="managementUserCreate" />} />
-      </Route>
-
-      <Route element={<PermissionBasedRoute requiredPermission={UserPermission.EDIT_USER} />}>
-        <Route path="users/:userId/edit" element={<DynamicPage page="managementUserEdit" />} />
-      </Route>
-    </Routes>
-  );
-}
+export default managementRoutes

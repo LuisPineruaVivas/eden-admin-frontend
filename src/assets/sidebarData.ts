@@ -55,6 +55,11 @@ export const sidebarData: SidebarData = {
           icon: LayoutDashboard,
         },
         {
+          title: 'Management',
+          url: '/management',
+          icon: Monitor,
+        },
+        {
           title: 'Tasks',
           url: '/tasks',
           icon: CheckLine,
