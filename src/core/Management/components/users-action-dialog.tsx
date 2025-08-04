@@ -20,15 +20,17 @@ import {
   FormLabel,
   FormMessage,
 } from '@components/ui/Form'
-import { Input } from '@components/ui/input'
+import { Input } from '@components/ui/Input'
 import { PasswordInput } from '@components/PasswordInput'
 import { SelectDropdown } from '@components/SelectDropdown'
 import { userTypes } from '../data/data'
-import { User } from '../../data/schema'
+import { User } from '../data/schema'
 import { POST } from '@config/fetcher/Post'
 import { useSelector } from 'react-redux'
 import { RootState } from '@config/store'
 import { toast } from 'sonner'
+import { useQueryClient } from '@tanstack/react-query'
+
 
 const formSchema = z
   .object({
@@ -70,10 +72,14 @@ interface Props {
   currentRow?: User
   open: boolean
   onOpenChange: (open: boolean) => void
+  pageIndex: number
+  pageSize: number
+  roleFilter?: string
 }
 
-export function UsersActionDialog({ currentRow, open, onOpenChange }: Props) {
+export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, pageSize, roleFilter }: Props) {
   const token = useSelector((state: RootState) => state.user.token)
+  const queryClient = useQueryClient()
   const userRole = useSelector((state: RootState) => state.user.user.role)
   const isManagerRole = userRole === 'manager'
   const allowedRoles = !currentRow && isManagerRole
@@ -112,16 +118,14 @@ export function UsersActionDialog({ currentRow, open, onOpenChange }: Props) {
     const roleId = parseInt(values.role, 10)
     const payload = {
       user: {
-        first_name: values.firstName,
-        last_name: values.lastName,
-        phone: values.phoneNumber,
+        name: values.firstName + ' ' + values.lastName,
         email: values.email,
+        phone: values.phoneNumber,
         password: values.password,
         password_confirmation: values.confirmPassword,
         role_id: roleId,
       },
     }
-    console.log('📤 payload', payload)
     try {
     await POST(
       `${import.meta.env.VITE_API_URL}/manager/users`,
@@ -129,22 +133,29 @@ export function UsersActionDialog({ currentRow, open, onOpenChange }: Props) {
       token
     )
     toast.success(isEdit ? 'User updated' : 'User created')
+    queryClient.invalidateQueries(['users', token, pageIndex, pageSize, roleFilter])
     form.reset()
     onOpenChange(false)
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      const axiosError = error as AxiosError<{ errors?: Record<string, string[]> }>
-      const serverErrors = axiosError.response?.data?.errors
-      if (serverErrors) {
-        Object.entries(serverErrors).forEach(([field, messages]) =>
+      const axiosError = error as AxiosError<{ errors?: Record<string, string[]>; message?: string }>
+      const status = axiosError.response?.status
+      const data = axiosError.response?.data
+
+      if (status === 403) {
+        toast.error('No tienes permisos suficientes para esta acción.')
+      } else if (data?.errors) {
+        Object.entries(data.errors).forEach(([field, messages]) =>
           form.setError(field as keyof UserForm, { message: messages[0] })
         )
+      } else if (data?.message) {
+        toast.error(data.message)
       } else {
-        toast.error('Failed to save user')
+        toast.error('Error al guardar el usuario.')
       }
     } else {
       console.error('Unexpected error', error)
-      toast.error('Failed to save user')
+      toast.error('Error al guardar el usuario.')
     }
   }
 }

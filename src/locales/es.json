@@ -61,9 +61,60 @@
       },
       "logout": {
         "success": "Has cerrado sesión correctamente."
-      }
-      
+      },
+    "dashboardSummary": {
+      "overview": "Visión general",
+      "analytics": "Analítica",
+      "reports": "Informes",
+      "download": "Descargar",
+      "pickDate": "Selecciona una fecha",
+      "newSubscriptions": "Nuevas suscripciones",
+      "newOrders": "Nuevos pedidos",
+      "avgOrderRevenue": "Ingresos medios por pedido",
+      "sinceLastWeek": "Desde la semana pasada",
+      "details": "Detalles",
+      "totalRevenue": "Ingresos totales",
+      "saleActivityMonthly": "Actividad de ventas - Mensual",
+      "saleActivityDescription": "Mostrando ventas totales de los últimos 6 meses",
+      "subscriptions": "Suscripciones",
+      "teamMembers": "Miembros del equipo",
+      "teamInvite": "Invita a los miembros de tu equipo a colaborar.",
+      "owner": "Propietario",
+      "member": "Miembro",
+      "payments": "Pagos",
+      "managePayments": "Gestiona tus pagos.",
+      "filterEmails": "Filtrar correos...",
+      "columns": "Columnas",
+      "status": {
+        "success": "Éxito",
+        "processing": "Procesando",
+        "failed": "Fallido"
+      },
+      "userGrowthAnalytics": "Analítica de crecimiento de usuarios",
+      "userGrowthDescription": "Métricas mensuales de adquisición y engagement de usuarios",
+      "conversionRates": "Tasas de conversión por fuente",
+      "conversionRatesDescription": "Rendimiento de las fuentes de tráfico",
+      "deviceUsage": "Uso de dispositivos",
+      "deviceUsageDescription": "Preferencias de dispositivo de los usuarios",
+      "topProducts": "Productos más vendidos",
+      "topProductsDescription": "Productos con mejores ventas este mes",
+      "monthlyReports": "Informes de rendimiento mensuales",
+      "monthlyReportsDescription": "Métricas comerciales mensuales completas",
+      "month": "Mes",
+      "totalSales": "Ventas totales",
+      "orders": "Pedidos",
+      "customers": "Clientes",
+      "avgOrderValue": "Valor medio de pedido",
+      "salesByCategory": "Ventas por categoría",
+      "salesByCategoryDescription": "Distribución de ingresos por categoría de producto",
+      "topCustomers": "Principales clientes",
+      "topCustomersDescription": "Clientes de mayor valor",
+      "revenue": "Ingresos",
+      "value": "Valor",
+      "sales": "Ventas",
+      "activeUsers": "Usuarios activos",
+      "totalUsers": "Usuarios totales",
+      "subscriptionsLabel": "Suscripciones"
     }
-    
-    
+  }
 }

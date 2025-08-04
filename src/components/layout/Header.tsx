@@ -8,6 +8,7 @@ import { Sun, Moon} from 'lucide-react'
 import { useTheme } from '@config/providers/ThemeProvider'
 import { ProfileDropdown } from '@components/ProfileDropdown'
 import { Search } from '@components/Search'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   fixed?: boolean
@@ -58,6 +59,7 @@ export const Header = ({
         <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} className="cursor-pointer">
           {theme === 'light' ? <Moon /> : <Sun />}
         </Button>
+        <LanguageSwitcher />
       <div className="ml-auto">
         <ProfileDropdown />
 

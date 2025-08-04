@@ -70,7 +70,11 @@ export default function UserListTable() {
         onPageSizeChange={setPageSize}
       />
 
-      <UsersDialogs />
+      <UsersDialogs
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+        roleFilter={roleFilter}
+      />
     </UsersProvider>
   )
 }

@@ -10,7 +10,6 @@ import { POST } from '@config/fetcher/Post'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
 
 export default function useAuth() {
   const navigate = useNavigate()
@@ -52,17 +51,13 @@ export default function useAuth() {
     retry: 1,
     refetchOnWindowFocus: false,
   })
-   useEffect(() => {
     if (data?.data.user) {
       dispatch(setUser({ user: data.data.user }))
     }
-  }, [data, dispatch])
 
-  useEffect(() => {
     if (isError) {
       logout()
     }
-  }, [isError, logout])
 
 
   const setCredentials = (newToken: string, user: IUser) => {

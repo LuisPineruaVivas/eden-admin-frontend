@@ -1,20 +1,20 @@
 {
-    "translation": {
-      "login": {
-        "welcome": "Welcome",
-        "login_to_account": "Login to your El Eden Group Account",
-        "continue": "Login",
-        "email": "Email",
-        "password": "Password",
-        "forgot_password": "Forgot your password?",
-        "terms_of_service": "Terms of Service",
-        "privacy_policy": "Privacy Policy",
-        "success": "Login successful!",
-        "badCredentialsError": "Invalid credentials, please check your email and password.",
-        "inactiveUserError": "Inactive user, please contact the administrator for user activation."
-      },
-      "layoutsError": {
-       "error500":{
+  "translation": {
+    "login": {
+      "welcome": "Welcome",
+      "login_to_account": "Login to your El Eden Group Account",
+      "continue": "Login",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot your password?",
+      "terms_of_service": "Terms of Service",
+      "privacy_policy": "Privacy Policy",
+      "success": "Login successful!",
+      "badCredentialsError": "Invalid credentials, please check your email and password.",
+      "inactiveUserError": "Inactive user, please contact the administrator for user activation."
+    },
+    "layoutsError": {
+      "error500": {
         "title": "Error 500",
         "subtitle": "Internal server error.",
         "description": "Sorry, something has gone wrong with our servers. Our technical team has been notified and is working to resolve the problem.",
@@ -24,8 +24,8 @@
         "buttontryagain": "Try again",
         "buttonback": "Back",
         "buttonhome": "Home"
-       },
-       "error404": {
+      },
+      "error404": {
         "title": "Error 404",
         "subtitle": "Page not found.",
         "description": "The page you are looking for does not exist or has been moved. Check the URL or navigate from the main menu.",
@@ -35,8 +35,8 @@
         "buttonhome": "Home",
         "buttonback": "Back",
         "buttonreload": "Reload"
-       },
-       "error403": {
+      },
+      "error403": {
         "title": "Error 403",
         "subtitle": "Access denied.",
         "description": "You do not have permission to access this page. If you believe this is an error, please contact your administrator.",
@@ -46,8 +46,8 @@
         "buttonlogin": "Login",
         "buttonback": "Back",
         "buttonhome": "Home"
-       },
-       "error401": {
+      },
+      "error401": {
         "title": "Error 401",
         "subtitle": "Unauthorized.",
         "description": "You need to log in to access this page. Your session may have expired.",
@@ -57,10 +57,64 @@
         "buttonlogin": "Login",
         "buttonback": "Back",
         "buttonhome": "Home"
-       }
-      },
-      "logout": {
-        "success": "You have logged out successfully."
       }
+    },
+    "logout": {
+      "success": "You have logged out successfully."
+    },
+    "dashboardSummary": {
+      "overview": "Overview",
+      "analytics": "Analytics",
+      "reports": "Reports",
+      "download": "Download",
+      "pickDate": "Pick a date",
+      "newSubscriptions": "New Subscriptions",
+      "newOrders": "New Orders",
+      "avgOrderRevenue": "Avg Order Revenue",
+      "sinceLastWeek": "Since Last week",
+      "details": "Details",
+      "totalRevenue": "Total Revenue",
+      "saleActivityMonthly": "Sale Activity - Monthly",
+      "saleActivityDescription": "Showing total sales for the last 6 months",
+      "subscriptions": "Subscriptions",
+      "teamMembers": "Team Members",
+      "teamInvite": "Invite your team members to collaborate.",
+      "owner": "Owner",
+      "member": "Member",
+      "payments": "Payments",
+      "managePayments": "Manage your payments.",
+      "filterEmails": "Filter emails...",
+      "columns": "Columns",
+      "status": {
+        "success": "Success",
+        "processing": "Processing",
+        "failed": "Failed"
+      },
+      "userGrowthAnalytics": "User Growth Analytics",
+      "userGrowthDescription": "Monthly user acquisition and engagement metrics",
+      "conversionRates": "Conversion Rates by Source",
+      "conversionRatesDescription": "Traffic source performance",
+      "deviceUsage": "Device Usage",
+      "deviceUsageDescription": "User device preferences",
+      "topProducts": "Top Performing Products",
+      "topProductsDescription": "Best selling products this month",
+      "monthlyReports": "Monthly Performance Reports",
+      "monthlyReportsDescription": "Comprehensive monthly business metrics",
+      "month": "Month",
+      "totalSales": "Total Sales",
+      "orders": "Orders",
+      "customers": "Customers",
+      "avgOrderValue": "Avg Order Value",
+      "salesByCategory": "Sales by Category",
+      "salesByCategoryDescription": "Revenue breakdown by product category",
+      "topCustomers": "Top Customers",
+      "topCustomersDescription": "Highest value customers",
+      "revenue": "Revenue",
+      "value": "Value",
+      "sales": "Sales",
+      "activeUsers": "Active Users",
+      "totalUsers": "Total Users",
+      "subscriptionsLabel": "Subscriptions"
     }
+  }
 }
