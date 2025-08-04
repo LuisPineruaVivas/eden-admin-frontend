@@ -1,11 +1,8 @@
-"use client"
-
 import { useState } from "react"
-import { Link } from "react-router-dom"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Search } from "lucide-react"
+import {  Search } from "lucide-react"
 
 interface Permission {
   name: string
@@ -294,21 +291,8 @@ const PermissionsPage = () => {
   }
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-white">
-      {/* Header */}
-      <header className="flex items-center justify-between h-16 px-6 bg-white border-b">
-        <div className="flex items-center space-x-4">
-          <Link to="/" className="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
-            <ArrowLeft className="w-5 h-5" />
-            <span>Volver al Dashboard</span>
-          </Link>
-          <div className="h-6 w-px bg-gray-300" />
-          <div>
-            <div className="text-sm text-gray-500">Sistema / Permisos</div>
-            <h1 className="text-2xl font-bold">Permisos</h1>
-          </div>
-        </div>
-      </header>
+    <div className="flex flex-col w-full min-h-screen">
+      
 
       {/* Main Content */}
       <main className="flex-1 p-6">
@@ -349,39 +333,60 @@ const PermissionsPage = () => {
         </div>
 
         {/* Permissions Table */}
-        <div className="bg-white border rounded-lg overflow-hidden">
+        <div className="border rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b">
+              <thead className=" border-b">
                 <tr>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900 w-48">Nombre</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900 w-32">Tipo</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">Descripción</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900 w-48">Ejemplo</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900 w-32">Rol</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 w-48">
+                    Nombre
+                  </th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 w-32">
+                    Tipo
+                  </th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600">
+                    Descripción
+                  </th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 w-48">
+                    Ejemplo
+                  </th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 w-32">
+                    Rol
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {filteredPermissions.map((permission, index) => {
                   const role = getRoleById(permission.role_id)
                   return (
-                    <tr key={permission.key_code} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr
+                      key={permission.key_code}
+                      className={
+                        index % 2 === 0
+                          ? "bg-white dark:bg-gray-800"
+                          : "bg-gray-50 dark:bg-gray-700"
+                      }
+                    >
                       <td className="py-4 px-4 border-b">
-                        <div className="font-mono text-sm text-blue-600 font-medium">{permission.name}</div>
+                        <div className="font-mono text-sm font-medium text-blue-600 dark:text-blue-400">
+                          {permission.name}
+                        </div>
                       </td>
                       <td className="py-4 px-4 border-b">
-                        <code className="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">
+                        <code className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-gray-700 dark:text-gray-200">
                           {permission.key_code}
                         </code>
                       </td>
                       <td className="py-4 px-4 border-b">
-                        <div className="text-sm text-gray-700 leading-relaxed">{permission.description}</div>
-                        <div className="text-xs text-gray-500 mt-1">
+                        <div className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                          {permission.description}
+                        </div>
+                        <div className="text-xs mt-1 text-gray-500 dark:text-gray-400">
                           <strong>Uso:</strong> {permission.usage}
                         </div>
                       </td>
                       <td className="py-4 px-4 border-b">
-                        <code className="text-xs bg-gray-900 text-green-400 px-2 py-1 rounded block">
+                        <code className="text-xs block px-2 py-1 rounded bg-gray-900 dark:bg-gray-800 text-green-400 dark:text-green-300">
                           {permission.example}
                         </code>
                       </td>
@@ -406,102 +411,146 @@ const PermissionsPage = () => {
 
         {/* Examples Section */}
         <div className="mt-12">
-          <h2 className="text-xl font-semibold mb-4">Permisos por Rol (Ejemplos)</h2>
+          <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+            Permisos por Rol (Ejemplos)
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {/* Admin */}
             <div>
-              <h3 className="text-lg font-medium mb-2">
-          <Badge className="bg-red-100 text-red-800 border-0">Admin</Badge>
+              <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
+          <Badge className="bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100 border-0">
+            Admin
+          </Badge>
               </h3>
-              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 dark:text-gray-300">
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_CREATE_USERS</code> – Crear usuarios
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_CREATE_USERS
+            </code> – Crear usuarios
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_UPDATE_USERS</code> – Editar usuarios
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_UPDATE_USERS
+            </code> – Editar usuarios
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_MANAGE_CUSTOMERS</code> – Gestión completa de clientes
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_MANAGE_CUSTOMERS
+            </code> – Gestión completa de clientes
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">MANAGE_SELLINGS_FORCE_GROUPS</code> – Administrar grupos de ventas
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              MANAGE_SELLINGS_FORCE_GROUPS
+            </code> – Administrar grupos de ventas
           </li>
               </ul>
             </div>
 
             {/* Manager */}
             <div>
-              <h3 className="text-lg font-medium mb-2">
-          <Badge className="bg-blue-100 text-blue-800 border-0">Manager</Badge>
+              <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
+          <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 border-0">
+            Manager
+          </Badge>
               </h3>
-              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 dark:text-gray-300">
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_CREATE_USERS</code> – Crear usuarios
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_CREATE_USERS
+            </code> – Crear usuarios
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_UPDATE_USERS</code> – Editar usuarios
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_UPDATE_USERS
+            </code> – Editar usuarios
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_MANAGE_CUSTOMERS</code> – Gestión de clientes
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_MANAGE_CUSTOMERS
+            </code> – Gestión de clientes
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_SEE_SELLINGS_FORCE_GROUPS</code> – Ver todos los grupos de ventas
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_SEE_SELLINGS_FORCE_GROUPS
+            </code> – Ver todos los grupos de ventas
           </li>
               </ul>
             </div>
 
             {/* Analyst */}
             <div>
-              <h3 className="text-lg font-medium mb-2">
-          <Badge className="bg-purple-100 text-purple-800 border-0">Analyst</Badge>
+              <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
+          <Badge className="bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100 border-0">
+            Analyst
+          </Badge>
               </h3>
-              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 dark:text-gray-300">
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_SEE_USERS</code> – Ver lista de usuarios
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_SEE_USERS
+            </code> – Ver lista de usuarios
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_SEE_CUSTOMERS</code> – Ver información de clientes
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_SEE_CUSTOMERS
+            </code> – Ver información de clientes
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_SEE_CUSTOMERS_PAYMENTS</code> – Ver historial de pagos
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_SEE_CUSTOMERS_PAYMENTS
+            </code> – Ver historial de pagos
           </li>
               </ul>
             </div>
 
             {/* Coordinator */}
             <div>
-              <h3 className="text-lg font-medium mb-2">
-          <Badge className="bg-green-100 text-green-800 border-0">Coordinator</Badge>
+              <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
+          <Badge className="bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100 border-0">
+            Coordinator
+          </Badge>
               </h3>
-              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 dark:text-gray-300">
           <li>
-            <code className="bg-gray-100 px-1 rounded">CAN_ADD_CUSTOMERS</code> – Agregar nuevos clientes
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              CAN_ADD_CUSTOMERS
+            </code> – Agregar nuevos clientes
           </li>
           <li>
-            <code className="bg-gray-100 px-1 rounded">REQUEST_USERS_TO_ITS_SELLINGS_FORCE_GROUP</code> – Solicitar usuarios a grupos
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              REQUEST_USERS_TO_ITS_SELLINGS_FORCE_GROUP
+            </code> – Solicitar usuarios a grupos
           </li>
               </ul>
             </div>
 
             {/* Seller */}
             <div>
-              <h3 className="text-lg font-medium mb-2">
-          <Badge className="bg-yellow-100 text-yellow-800 border-0">Seller</Badge>
+              <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
+          <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100 border-0">
+            Seller
+          </Badge>
               </h3>
-              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+              <ul className="list-disc list-inside space-y-1 text-sm text-gray-700 dark:text-gray-300">
           <li>
-            <code className="bg-gray-100 px-1 rounded">SEE_ITS_SELLINGS_FORCE_GROUP</code> – Ver sus grupos de ventas
+            <code className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 px-1 rounded">
+              SEE_ITS_SELLINGS_FORCE_GROUP
+            </code> – Ver sus grupos de ventas
           </li>
               </ul>
             </div>
 
             {/* Customer */}
             <div>
-              <h3 className="text-lg font-medium mb-2">
-          <Badge className="bg-gray-100 text-gray-800 border-0">Customer</Badge>
+              <h3 className="text-lg font-medium mb-2 text-gray-800 dark:text-gray-200">
+          <Badge className="bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 border-0">
+            Customer
+          </Badge>
               </h3>
-              <p className="text-sm text-gray-600">Este rol no tiene permisos de ejemplo asignados.</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+          Este rol no tiene permisos de ejemplo asignados.
+              </p>
             </div>
 
           </div>

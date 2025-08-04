@@ -1,16 +1,11 @@
-"use client"
-
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Input } from "@/components/ui/input"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { AreaChart, Area, XAxis, CartesianGrid, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell } from "recharts"
 import {
-  Download,
-  Calendar,
   MoreHorizontal,
   TrendingUp,
   TrendingDown,
@@ -307,7 +302,7 @@ const DashboardSummary = () => {
             <CardContent>
               <div className="text-2xl font-bold mb-1">{overviewData.subscriptions.value}</div>
               <p className="text-xs text-gray-500 mb-4">{overviewData.subscriptions.change}</p>
-              <ChartContainer config={chartConfigs.subscriptions} className="h-[100px]">
+              <ChartContainer config={chartConfigs.subscriptions} className="">
                 <BarChart data={overviewData.subscriptions.chartData}>
                   <Bar dataKey="value" fill="var(--color-value)" radius={2} />
                 </BarChart>
@@ -360,11 +355,6 @@ const DashboardSummary = () => {
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between mb-4">
-            <Input placeholder={t("translation.dashboardSummary.filterEmails")} className="max-w-sm" />
-            <Button variant="outline" size="sm">
-              Columns
-              <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
           </div>
           <div className="rounded-md border">
             <table className="w-full">
@@ -679,16 +669,6 @@ const DashboardSummary = () => {
                 <span>{t("translation.dashboardSummary.reports")}</span>
               </Button>
             </div>
-          </div>
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </Button>
-            <Button variant="outline" size="sm">
-              <Calendar className="w-4 h-4 mr-2" />
-              Pick a date
-            </Button>
           </div>
         </div>
       </header>
