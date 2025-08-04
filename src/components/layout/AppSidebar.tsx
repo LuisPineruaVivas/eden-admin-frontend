@@ -5,7 +5,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@components/ui/Sidebar'
-import { sidebarData } from '@assets/sidebarData'
+import { sidebarData } from '@lib/NavbarPermissionData'
 import { NavUser } from '@components/layout/NavUser'
 import { NavGroup } from '@components/layout/NavGroup'
 import { TeamSwitcher } from '@components/layout/TeamSwitcher'

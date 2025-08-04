@@ -1,18 +1,11 @@
-import useAuth from './useAuth';
-import { UserPermission } from '@interface/permissions';
+import { useSelector } from 'react-redux'
+import { RootState } from '@config/store'
 
-export function useHasPermission(requiredPermissions: UserPermission | UserPermission[]) {
-  const { user } = useAuth();
+export function useHasPermission(requiredPermission: string): boolean {
+  const user = useSelector((state: RootState) => state.user.user)
+  if (!user || !user.permissions) return false
 
-  if (!user || !user.permissions) {
-    return false;
-  }
-
-  const userPermissions = new Set(user.permissions);
-  const permissionsToCheck = Array.isArray(requiredPermissions)
-    ? requiredPermissions
-    : [requiredPermissions];
-
-  // Verifica si el usuario tiene TODOS los permisos requeridos
-  return permissionsToCheck.every(permission => userPermissions.has(permission));
+  const roleKey = user.role.toLowerCase()
+  const relevantPermissions = user.permissions[roleKey] || []
+  return relevantPermissions.includes(requiredPermission)
 }

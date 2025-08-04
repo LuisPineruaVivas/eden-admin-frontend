@@ -49,10 +49,17 @@ export function LoginForm({
       }
     },
     onError: (err: any) => {
-      const msg =
-        err.response?.data?.message ||
-        err.message ||
-        t("translation.login.subtitle")
+      let msg;
+      if (err.response?.data?.error === "inactiveUserError") {
+        msg = t("translation.login.inactiveUserError")
+      } else if (err.response?.data?.error === "badCredentialsError") {
+        msg = t("translation.login.badCredentialsError")
+      } else {
+        msg =
+          err.response?.data?.message ||
+          err.message ||
+          t("translation.login.subtitle")
+      }
       setErrorMsg(msg)
     }
   })
@@ -120,12 +127,12 @@ export function LoginForm({
                   : t("translation.login.continue")}
               </Button>
               {isError && errorMsg && (
-                <div className="text-red-500 text-sm text-center mt-2">
+                <div className="text-red-500 text-sm text-center antialiased italic text-shadow-xs">
                   {errorMsg}
                 </div>
               )}
               {isSuccess && !errorMsg && (
-                <div className="text-green-600 text-sm text-center mt-2">
+                <div className="text-green-600 text-sm text-center">
                   {t("translation.login.success")}
                 </div>
               )}

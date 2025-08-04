@@ -144,3 +144,18 @@
 .custom-toast-animation[data-state='closed'] {
   animation: custom-slide-out-left 400ms ease-in forwards;
 }
+
+* {
+    &::-webkit-scrollbar-thumb {
+    background-color: greem;
+    border-radius: red;
+}
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+        background-color: transparent;
+    }
+}

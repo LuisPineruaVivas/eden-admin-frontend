@@ -18,7 +18,7 @@ import {
   CommandList,
   CommandSeparator,
 } from '@components/ui/Command'
-import { sidebarData } from '@assets/sidebarData'
+import { sidebarData } from '@lib/NavbarPermissionData'
 import { ScrollArea } from '@components/ui/ScrollArea'
 
 export function CommandMenu() {

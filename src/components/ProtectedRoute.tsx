@@ -2,18 +2,27 @@ import { Navigate, Outlet } from 'react-router-dom'
 import useAuth from '@hooks/useAuth'
 import { PageSkeleton } from '@components/ui/PageSkeleton'
 import { AuthLayout } from '@components/layout/AuthLayout'
+import { useHasPermission } from '@/hooks/useHasPermission'
 
-export const ProtectedRoute = () => {
+interface Props {
+  requiredPermission?: string
+}
+
+export const ProtectedRoute = ({ requiredPermission }: Props) => {
   const { isAuthenticated, isValidating } = useAuth()
+  const hasPermission = requiredPermission ? useHasPermission(requiredPermission) : true
 
-  // Mientras se valida el token, muestra el esqueleto.
-  // Esto evita el parpadeo porque `isAuthenticated` será `true` gracias al token
-  // y no se producirá la redirección prematura.
   if (isValidating) {
     return <PageSkeleton />
   }
 
-  // Si después de validar no está autenticado (token inválido), redirige a login.
-  // Si está autenticado, muestra el layout con las rutas hijas.
-  return isAuthenticated ? <AuthLayout><Outlet /></AuthLayout> : <Navigate to="/login" />
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+
+  if (!hasPermission) {
+    return <Navigate to="/403" replace />
+  }
+
+  return <AuthLayout><Outlet /></AuthLayout>
 }

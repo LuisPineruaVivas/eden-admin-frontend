@@ -1,1 +1,0 @@
-// Menú de acciones (Editar, Deshabilitar) para la tabla

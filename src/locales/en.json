@@ -9,7 +9,9 @@
         "forgot_password": "Forgot your password?",
         "terms_of_service": "Terms of Service",
         "privacy_policy": "Privacy Policy",
-        "success": "Login successful!"
+        "success": "Login successful!",
+        "badCredentialsError": "Invalid credentials, please check your email and password.",
+        "inactiveUserError": "Inactive user, please contact the administrator for user activation."
       },
       "layoutsError": {
        "error500":{

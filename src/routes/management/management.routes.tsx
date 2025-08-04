@@ -1,27 +1,30 @@
-import { Routes, Route } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import { DynamicPage } from '@/lib/lazyImports';
-import { PermissionBasedRoute } from '@/components/PermissionBasedRoute';
-import { UserPermission } from '@/interface/permissions';
+import { PermissionBasedRoute } from '@components/PermissionBasedRoute';
 
-export default function ManagementModulePage() {
-  return (
-    <Routes>
-      {/* Dashboard del módulo */}
-      <Route index element={<DynamicPage page="managementDashboard" />} />
+export const managementRoutes: RouteObject[] = [
+  {
+    path: 'management',
+    children: [
+      {
+        index: true,
+        element: <DynamicPage page="managementSummary" />
+      },
+      {
+        element: <PermissionBasedRoute requiredPermission="CAN_SEE_USERS" />,
+        children: [
+          { path: 'users', element: <DynamicPage page="managementUserList" />},
+          { path: 'users/:userId', element: <DynamicPage page="managementUserDetail" /> }
+        ]
+      },
+      {
+        element: <PermissionBasedRoute requiredPermission="CAN_SEE_USERS" />,
+        children: [
+          { path: 'permissionlist', element: <DynamicPage page="managementPermissionList" /> }
+        ]
+      },
+      
 
-      {/* Rutas de usuarios */}
-      <Route element={<PermissionBasedRoute requiredPermission={UserPermission.VIEW_USERS} />}>
-        <Route path="users" element={<DynamicPage page="managementUserList" />} />
-        <Route path="users/:userId" element={<DynamicPage page="managementUserDetail" />} />
-      </Route>
-
-      <Route element={<PermissionBasedRoute requiredPermission={UserPermission.CREATE_USER} />}>
-        <Route path="users/create" element={<DynamicPage page="managementUserCreate" />} />
-      </Route>
-
-      <Route element={<PermissionBasedRoute requiredPermission={UserPermission.EDIT_USER} />}>
-        <Route path="users/:userId/edit" element={<DynamicPage page="managementUserEdit" />} />
-      </Route>
-    </Routes>
-  );
-}
+    ]
+  }
+];

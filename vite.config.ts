@@ -29,6 +29,8 @@ export default ({ mode }: ConfigEnv) => {
         "@store": path.resolve(__dirname, "./src/config/store"),
         "@layouts": path.resolve(__dirname, "./src/layouts"),
         "@interface": path.resolve(__dirname, "./src/interface"),
+        "@routes": path.resolve(__dirname, "./src/routes"),
+        "@utils": path.resolve(__dirname, "./src/utils"),
       },
     },
   })

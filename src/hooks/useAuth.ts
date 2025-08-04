@@ -7,9 +7,10 @@ import { setUser, setToken, clearUser } from '@config/store/reducers/user.slice'
 import { useQuery } from '@tanstack/react-query'
 import { GET } from '@config/fetcher/Get'
 import { POST } from '@config/fetcher/Post'
-import { useEffect, useCallback } from 'react'
-import { toast } from 'sonner' 
-import { useTranslation } from 'react-i18next' 
+import { useCallback } from 'react'
+import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 export default function useAuth() {
   const navigate = useNavigate()
@@ -51,8 +52,7 @@ export default function useAuth() {
     retry: 1,
     refetchOnWindowFocus: false,
   })
-
-  useEffect(() => {
+   useEffect(() => {
     if (data?.data.user) {
       dispatch(setUser({ user: data.data.user }))
     }
@@ -63,6 +63,7 @@ export default function useAuth() {
       logout()
     }
   }, [isError, logout])
+
 
   const setCredentials = (newToken: string, user: IUser) => {
     Cookies.set('token', newToken, { expires: 1, path: '/' })

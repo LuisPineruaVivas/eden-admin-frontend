@@ -46,6 +46,9 @@
       "@layouts/*": [
         "./src/layouts/*"
       ],
+      "@routes/*": [
+        "./src/routes/*"
+      ]
     },
     "skipLibCheck": true,
 

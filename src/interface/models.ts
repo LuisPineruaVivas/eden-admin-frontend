@@ -27,15 +27,19 @@ export type Roles = 'admin' | 'manager' | 'coordinator' | 'analyst' | 'customer'
  * This structure can be used to manage access control and permissions for various functionalities.
  * @example
  * const userPermissions: Permissions = {
- *   marketing: [1, 2, 3],
- *   sales: [4, 5],
- *   customers: [6, 7]
+ *   admin: ['CAN_ACCESS'],
+ *   manager: [],
+ *   coordinator: [],
+ *   analyst: [],
+ *   customer: []
  * };
  */
 export type Permissions = {
-  marketing: number[];
-  sales: number[];
-  customers: number[];
+  admin: string[];
+  manager: string[];
+  coordinator: string[];
+  analyst: string[];
+  customer: string[];
 }
 
 /**
@@ -60,10 +64,10 @@ export interface IUser {
   avatar: string | null;
   name: string;
   email: string;
-  role: string;
+  role: Roles;
   status: Statues;
   created_at: string;
-  permissions: Permissions[];
+  permissions: Permissions;
 }
 
 export interface LoginRequest {

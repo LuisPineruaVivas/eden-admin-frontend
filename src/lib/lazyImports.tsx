@@ -13,8 +13,9 @@ const pageMap: Record<string, () => Promise<{ default: React.ComponentType }>> =
   summary: () => import('@pages/Summary/Index'),
   
   //Modulo de
-  management: () => import('@pages/management/index'),
-
+  managementSummary: () => import('@pages/management/index'),
+  managementUserList: () => import('@core/Management/UserList.table'),
+  managementPermissionList: () => import('@core/Management/UserPermission.table'),
 
   //Layouts de errores.
   error401: () => import('@layouts/401'),
