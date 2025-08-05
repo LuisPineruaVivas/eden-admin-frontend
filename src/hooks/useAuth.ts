@@ -1,38 +1,37 @@
+import { useCallback } from 'react'
 import Cookies from 'js-cookie'
-import { RootState } from '@config/store'
-import { IUser } from '@interfaces/models'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setUser, setToken, clearUser } from '@config/store/reducers/user.slice'
 import { useQuery } from '@tanstack/react-query'
-import { GET } from '@config/fetcher/Get'
-import { POST } from '@config/fetcher/Post'
-import { useCallback } from 'react'
 import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
+import { RootState } from '@config/store'
+import { IUser } from '@interfaces/models'
+import { GET } from '@config/fetcher/Get'
+import { POST } from '@config/fetcher/Post'
+import { setUser, setToken, clearUser } from '@config/store/reducers/user.slice'
 
 export default function useAuth() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { t } = useTranslation('common') 
+  const { t } = useTranslation('common')
 
-  const token = Cookies.get('token') || ''
+  const token = Cookies.get('token') ?? ''
   const user = useSelector((state: RootState) => state.user.user)
-  const isAuthenticated = !!user || !!token
+  const isAuthenticated = Boolean(user || token)
 
   const logout = useCallback(async () => {
-    const tokenToInvalidate = Cookies.get('token');
-
+    const storedToken = Cookies.get('token')
     try {
-      if (tokenToInvalidate) {
-        await POST(`${import.meta.env.VITE_API_URL}/auth/logout`, {}, tokenToInvalidate);
+      if (storedToken) {
+        await POST(`${import.meta.env.VITE_API_URL}/auth/logout`, {}, storedToken)
       }
-    } catch (error) {
-      console.error("Fallo al cerrar sesión en el servidor, cerrando sesión en el cliente:", error);
+    } catch (err) {
+      console.error('Error invalidating session on server:', err)
     } finally {
-      Cookies.remove('token', { path: '/' });
-      dispatch(clearUser());
-      navigate('/login', { replace: true });
+      Cookies.remove('token', { path: '/' })
+      dispatch(clearUser())
+      navigate('/login', { replace: true })
       toast.message(t('translation.logout.success'), {
         description: new Date().toLocaleString(undefined, {
           dateStyle: 'full',
@@ -40,30 +39,28 @@ export default function useAuth() {
         }),
       })
     }
-  }, [dispatch, navigate, t]);
+  }, [dispatch, navigate, t])
 
-  const { data, isError, isLoading: isValidating } = useQuery({
+  useQuery({
     queryKey: ['validateAuth', token],
-    queryFn: () => {
-      return GET<{ user: IUser }>(`${import.meta.env.VITE_API_URL}/auth/verify`, token)
-    },
+    queryFn: () =>
+      GET<{ user: IUser }>(`${import.meta.env.VITE_API_URL}/auth/verify`, token),
     enabled: !!token && !user,
     retry: 1,
     refetchOnWindowFocus: false,
-  })
-    if (data?.data.user) {
-      dispatch(setUser({ user: data.data.user }))
-    }
-
-    if (isError) {
+    onSuccess: ({ data }) => {
+      dispatch(setToken(token))
+      dispatch(setUser({ user: data.user }))
+    },
+    onError: () => {
       logout()
-    }
+    },
+  })
 
-
-  const setCredentials = (newToken: string, user: IUser) => {
+  const setCredentials = (newToken: string, newUser: IUser) => {
     Cookies.set('token', newToken, { expires: 1, path: '/' })
     dispatch(setToken(newToken))
-    dispatch(setUser({ user }))
+    dispatch(setUser({ user: newUser }))
     toast.success(t('translation.login.success'), {
       description: new Date().toLocaleString(undefined, {
         dateStyle: 'full',
@@ -74,10 +71,10 @@ export default function useAuth() {
 
   return {
     token,
+    user,
+    isAuthenticated,
+    isValidating: false, // react-query flag not exposed directly; handle via query state if needed
     logout,
     setCredentials,
-    isAuthenticated,
-    isValidating,
-    user
   }
 }
