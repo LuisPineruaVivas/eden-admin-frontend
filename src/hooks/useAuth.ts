@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import { RootState } from '@config/store'
-import { IUser } from '@interface/models'
+import { IUser } from '@interfaces/models'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, setToken, clearUser } from '@config/store/reducers/user.slice'

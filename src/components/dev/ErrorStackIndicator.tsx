@@ -1,4 +1,4 @@
-import { Environments } from "@/interface/models";
+import { Environments } from "@interfaces/models";
 import { useErrorStack } from "@config/providers/ErrorManagerProvider";
 
 interface IErrorStackIndicator {

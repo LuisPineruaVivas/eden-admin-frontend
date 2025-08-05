@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { IUser } from '@/interface/models'
+import { IUser } from '@interfaces/models'
 import { Button } from '@components/ui/Button'
 import { Eye, Edit, Trash } from 'lucide-react'
 import { useHasPermission } from '@hooks/useHasPermission'
@@ -10,8 +10,8 @@ interface UsersTableActionsProps {
 
 export function UsersTableActions({ user }: UsersTableActionsProps) {
   const navigate = useNavigate()
-  const canView    = useHasPermission('CAN_SEE_USERS')
-  const canUpdate  = useHasPermission('CAN_UPDATE_USERS')
+  const canView = useHasPermission('CAN_SEE_USERS')
+  const canUpdate = useHasPermission('CAN_UPDATE_USERS')
   const canDestroy = useHasPermission('CAN_DESTROY_USERS')
 
   return (
@@ -40,7 +40,7 @@ export function UsersTableActions({ user }: UsersTableActionsProps) {
         <Button
           size="icon"
           variant="ghost"
-          onClick={() => {/* disparar diálogo de borrado */}}
+          onClick={() => {/* disparar diálogo de borrado */ }}
           title="Eliminar"
         >
           <Trash size={16} />

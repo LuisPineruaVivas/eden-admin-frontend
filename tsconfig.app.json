@@ -41,7 +41,7 @@
         "./src/config/*"
       ],
       "@interfaces/*": [
-        "./src/interfaces/*"
+        "./src/interface/*"
       ],
       "@layouts/*": [
         "./src/layouts/*"

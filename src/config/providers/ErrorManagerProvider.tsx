@@ -1,5 +1,5 @@
 import { Button } from '@components/ui/Button';
-import { Environments } from '@/interface/models';
+import { Environments } from '@interfaces/models';
 import {
   Dialog,
   DialogContent,
@@ -26,15 +26,15 @@ export const ErrorBoundary = class extends Component<{ children: React.ReactNode
     super(props);
     this.state = { error: null };
   }
-  
+
   static getDerivedStateFromError(error: Error) {
     return { error };
   }
-  
+
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     console.error(error, info);
   }
-  
+
   render() {
     return this.props.children;
   }
@@ -42,7 +42,7 @@ export const ErrorBoundary = class extends Component<{ children: React.ReactNode
 
 export const ErrorManagerProvider: React.FC<{ environment: Environments, children: React.ReactNode }> = ({ environment, children }) => {
   const [errors, setErrors] = useState<Error[]>([]);
-  
+
   const pushError = (error: Error) => {
     setErrors(prev => [...prev, error]);
   };
@@ -67,14 +67,14 @@ export const ErrorManagerProvider: React.FC<{ environment: Environments, childre
   const allowEnvs = ['debug'];
 
   return (
-    <ErrorManagerContext.Provider 
-      value={{ 
+    <ErrorManagerContext.Provider
+      value={{
         errors,
         pushError,
         removeError,
         clearAllErrors,
-        setError, 
-        clearError 
+        setError,
+        clearError
       }}
     >
       {
@@ -82,8 +82,8 @@ export const ErrorManagerProvider: React.FC<{ environment: Environments, childre
           <>
             <ErrorBoundary>{children}</ErrorBoundary>
 
-            <Dialog 
-              open={errors.length > 0} 
+            <Dialog
+              open={errors.length > 0}
               onOpenChange={(open) => {
                 if (!open) clearError();
               }}

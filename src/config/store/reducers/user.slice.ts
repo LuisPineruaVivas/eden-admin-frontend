@@ -1,4 +1,4 @@
-import { IUser } from "@/interface/models";
+import { IUser } from "@interfaces/models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface TokenState {

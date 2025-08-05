@@ -1,5 +1,5 @@
 import { RootState } from "@config/store";
-import { IUser } from "@/interface/models";
+import { IUser } from "@interfaces/models";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUser,

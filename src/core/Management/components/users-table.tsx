@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from '@components/ui/Table'
-import { IUser } from '@interface/models'
+import { IUser } from '@interfaces/models'
 import { DataTableToolbar } from './data-table-toolbar'
 import { DataTablePagination } from './data-table-pagination'
 

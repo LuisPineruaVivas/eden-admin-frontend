@@ -1,4 +1,4 @@
-import { IUser } from '@/interface/models'
+import { IUser } from '@interfaces/models'
 import { createContext, useContext, useState, ReactNode } from 'react'
 
 export type UsersDialogType = 'add' | 'invite' | 'edit' | 'delete' | null
