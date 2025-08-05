@@ -1,5 +1,5 @@
-import { Navigate, Outlet } from 'react-router-dom'
 import useAuth from '@hooks/useAuth'
+import { Navigate } from 'react-router-dom'
 import { PageSkeleton } from '@components/ui/PageSkeleton'
 import { AuthLayout } from '@components/layout/AuthLayout'
 import { useHasPermission } from '@hooks/useHasPermission'
@@ -25,8 +25,6 @@ export const ProtectedRoute = ({ requiredPermission }: Props) => {
   }
 
   return (
-    <AuthLayout>
-      <Outlet />
-    </AuthLayout>
+    <AuthLayout />
   )
 }
