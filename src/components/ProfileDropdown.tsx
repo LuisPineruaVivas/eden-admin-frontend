@@ -1,5 +1,5 @@
+import useAuth from '@hooks/useAuth'
 import { Link } from 'react-router-dom'
-import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/Avatar'
 import { Button } from '@components/ui/Button'
 import {
   DropdownMenu,
@@ -11,14 +11,13 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@components/ui/DropdownMenu'
-import useAuth from '@hooks/useAuth'
 import { Skeleton } from '@components/ui/Skeleton'
+import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/Avatar'
 
 export function ProfileDropdown() {
   const { user, logout, isValidating } = useAuth()
   
   if (isValidating) {
-    console.log("Validando....")
     return (
       <div className="flex items-center gap-2 p-2">
         <Skeleton className="h-8 w-8 rounded-full" />
@@ -32,7 +31,7 @@ export function ProfileDropdown() {
 
   if (!user) {
     return null
-    console.log("No hubo usuario en el estado global") // No renderizar el dropdown si no hay un usuario logueado
+    console.log("No hubo usuario en el estado global")
   }
 
   return (
