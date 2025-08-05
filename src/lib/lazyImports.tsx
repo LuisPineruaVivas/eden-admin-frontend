@@ -10,7 +10,7 @@ const pageMap: Record<string, () => Promise<{ default: React.ComponentType }>> =
   login: () => import('@pages/Login/index'),
 
   //Dashboard Summary
-  summary: () => import('@pages/Summary/Index'),
+  summary: () => import('@pages/Summary/index'),
   
   //Modulo de
   managementSummary: () => import('@pages/Management/index'),
