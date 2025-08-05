@@ -1,6 +1,6 @@
 import { RouteObject } from 'react-router-dom';
 import { DynamicPage } from '@lib/lazyImports';
-import { PermissionBasedRoute } from '@components/PermissionBasedRoute';
+import { ProtectedRoute } from '@components/ProtectedRoute';
 
 export const managementRoutes: RouteObject[] = [
   {
@@ -11,14 +11,13 @@ export const managementRoutes: RouteObject[] = [
         element: <DynamicPage page="managementSummary" />
       },
       {
-        element: <PermissionBasedRoute requiredPermission="CAN_SEE_USERS" />,
+        element: <ProtectedRoute requiredPermission="CAN_SEE_USERS" />,
         children: [
-          { path: 'users', element: <DynamicPage page="managementUserList" />},
-          { path: 'users/:userId', element: <DynamicPage page="managementUserDetail" /> }
+          { path: 'users', element: <DynamicPage page="managementUserList" />}
         ]
       },
       {
-        element: <PermissionBasedRoute requiredPermission="CAN_SEE_USERS" />,
+        element: <ProtectedRoute requiredPermission="CAN_SEE_USERS" />,
         children: [
           { path: 'permissionlist', element: <DynamicPage page="managementPermissionList" /> }
         ]

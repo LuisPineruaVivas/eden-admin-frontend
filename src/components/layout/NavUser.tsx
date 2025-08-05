@@ -1,40 +1,52 @@
+import useAuth from '@hooks/useAuth'
 import { Link } from 'react-router-dom'
 import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
   LogOut,
-  Sparkles,
+  BadgeCheck,
+  ChevronsUpDown,
 } from 'lucide-react'
 import { 
   Avatar, 
-  AvatarFallback, 
-  AvatarImage 
+  AvatarImage, 
+  AvatarFallback 
 } from '@components/ui/Avatar'
 import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   useSidebar,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
 } from '@components/ui/Sidebar'
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuGroup,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@components/ui/DropdownMenu'
-import useAuth from '@hooks/useAuth'
+import { Skeleton } from '@components/ui/Skeleton'
+
 
 export function NavUser() {
   const { isMobile } = useSidebar()
-  const { user, logout } = useAuth()
+  const { user, logout, isValidating } = useAuth()
+
+  if (isValidating) {
+    return (
+      <div className="flex items-center gap-2 p-2">
+        <Skeleton className="h-8 w-8 rounded-full" />
+        <div className="flex-1 space-y-1">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-3 w-32" />
+        </div>
+      </div>
+    )
+  }
 
   if (!user) {
-    return null // No renderizar si no hay un usuario autenticado
+    return null
+    console.log("No hubo usuario en el estado global") // No renderizar el dropdown si no hay un usuario logueado
   }
 
   return (
@@ -77,29 +89,10 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
               <DropdownMenuItem asChild>
                 <Link to='/settings/account'>
                   <BadgeCheck />
                   Account
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to='/settings'>
-                  <CreditCard />
-                  Billing
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link to='/settings/notifications'>
-                  <Bell />
-                  Notifications
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>

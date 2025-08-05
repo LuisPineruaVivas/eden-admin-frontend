@@ -60,7 +60,8 @@
       }
     },
     "logout": {
-      "success": "You have logged out successfully."
+      "success": "You have logged out successfully.",
+      "error": "Something has happened when trying to logout."
     },
     "dashboardSummary": {
       "overview": "Overview",

@@ -1,5 +1,5 @@
+import useAuth from '@hooks/useAuth'
 import { Link } from 'react-router-dom'
-import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/Avatar'
 import { Button } from '@components/ui/Button'
 import {
   DropdownMenu,
@@ -11,13 +11,27 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@components/ui/DropdownMenu'
-import useAuth from '@hooks/useAuth'
+import { Skeleton } from '@components/ui/Skeleton'
+import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/Avatar'
 
 export function ProfileDropdown() {
-  const { user, logout } = useAuth()
+  const { user, logout, isValidating } = useAuth()
+  
+  if (isValidating) {
+    return (
+      <div className="flex items-center gap-2 p-2">
+        <Skeleton className="h-8 w-8 rounded-full" />
+        <div className="flex-1 space-y-1">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-3 w-32" />
+        </div>
+      </div>
+    )
+  }
 
   if (!user) {
-    return null // No renderizar el dropdown si no hay un usuario logueado
+    return null
+    console.log("No hubo usuario en el estado global")
   }
 
   return (
@@ -47,19 +61,7 @@ export function ProfileDropdown() {
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to='/settings'>
-              Billing
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to='/settings'>
-              Settings
-              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>New Team</DropdownMenuItem>
+         
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={logout} className="cursor-pointer">

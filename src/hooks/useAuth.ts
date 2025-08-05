@@ -1,69 +1,74 @@
 import Cookies from 'js-cookie'
+
+import { toast } from 'sonner'
 import { RootState } from '@config/store'
 import { IUser } from '@interfaces/models'
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { setUser, setToken, clearUser } from '@config/store/reducers/user.slice'
-import { useQuery } from '@tanstack/react-query'
-import { GET } from '@config/fetcher/Get'
-import { POST } from '@config/fetcher/Post'
-import { useCallback } from 'react'
-import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
+import { useMutation } from '@tanstack/react-query'
+import { verifyAuth } from '@config/epics/auth.epic'
+import { useSelector, useDispatch } from 'react-redux'
+import { useCallback, useEffect, useRef } from 'react'
+import { setToken, clearUser } from '@config/store/reducers/user.slice'
+import { POST } from '@config/fetcher/Post'
 
 export default function useAuth() {
+  const { t } = useTranslation('common')
+  const { user, isValidating } = useSelector((state: RootState) => state.user)
+  
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { t } = useTranslation('common') 
-
+  const hasVerified = useRef(false)
   const token = Cookies.get('token') || ''
-  const user = useSelector((state: RootState) => state.user.user)
   const isAuthenticated = !!user || !!token
 
-  const logout = useCallback(async () => {
-    const tokenToInvalidate = Cookies.get('token');
+  const refreshUser = () => {
+    dispatch(verifyAuth(token))
+  }
 
-    try {
-      if (tokenToInvalidate) {
-        await POST(`${import.meta.env.VITE_API_URL}/auth/logout`, {}, tokenToInvalidate);
-      }
-    } catch (error) {
-      console.error("Fallo al cerrar sesión en el servidor, cerrando sesión en el cliente:", error);
-    } finally {
-      Cookies.remove('token', { path: '/' });
-      dispatch(clearUser());
-      navigate('/login', { replace: true });
-      toast.message(t('translation.logout.success'), {
+  useEffect(() => {
+    if (token && !user && !hasVerified.current) {
+      hasVerified.current = true
+      dispatch(verifyAuth(token))
+    }
+  }, [token, user, dispatch])
+
+  const logoutMutation = useMutation({
+    mutationKey: [token],
+    mutationFn: () => POST(`${import.meta.env.VITE_API_URL}/auth/logout`),
+    onSuccess: () => {
+      Cookies.remove('token', { path: '/' })
+      dispatch(clearUser())
+      navigate('/login', { replace: true })
+      toast.success(t('translation.logout.success'), {
         description: new Date().toLocaleString(undefined, {
           dateStyle: 'full',
           timeStyle: 'short',
         }),
       })
-    }
-  }, [dispatch, navigate, t]);
-
-  const { data, isError, isLoading: isValidating } = useQuery({
-    queryKey: ['validateAuth', token],
-    queryFn: () => {
-      return GET<{ user: IUser }>(`${import.meta.env.VITE_API_URL}/auth/verify`, token)
     },
-    enabled: !!token && !user,
-    retry: 1,
-    refetchOnWindowFocus: false,
+    onError: (error) => {
+      toast.error(t('translation.logout.error'), {
+        description: new Date().toLocaleString(undefined, {
+          dateStyle: 'full',
+          timeStyle: 'short',
+        }),
+      })
+      console.error(
+        'Error al cerrar sesión en el servidor, cerrando sesión en el cliente:',
+        error
+      )
+    },
   })
-    if (data?.data.user) {
-      dispatch(setUser({ user: data.data.user }))
-    }
 
-    if (isError) {
-      logout()
-    }
+  const logout = useCallback(() => {
+    logoutMutation.mutate()
+  }, [logoutMutation])
 
-
-  const setCredentials = (newToken: string, user: IUser) => {
+  const setCredentials = (newToken: string, newUser: IUser) => {
     Cookies.set('token', newToken, { expires: 1, path: '/' })
     dispatch(setToken(newToken))
-    dispatch(setUser({ user }))
+    dispatch({ type: 'user/setUser', payload: { user: newUser } })
     toast.success(t('translation.login.success'), {
       description: new Date().toLocaleString(undefined, {
         dateStyle: 'full',
@@ -73,11 +78,12 @@ export default function useAuth() {
   }
 
   return {
+    user,
     token,
     logout,
-    setCredentials,
-    isAuthenticated,
+    refreshUser,
     isValidating,
-    user
+    setCredentials,
+    isAuthenticated
   }
 }
