@@ -40,13 +40,13 @@ export type Permissions = {
 };
 
 /**
- * @type {Statuses}
+ * @type {Statues}
  * @description This type defines the possible statuses for a user in the application.
  * It includes 'active', 'inactive', and 'pending'.
  * @example
- * const userStatus: Statuses = 'active';
+ * const userStatus: Statues = 'active';
  */
-export type Statuses = 'active' | 'inactive' | 'pending';
+export type Statues = 'active' | 'inactive' | 'pending';
 
 /**
  * @interface IUser

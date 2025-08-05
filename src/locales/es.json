@@ -135,7 +135,8 @@
        }
       },
       "logout": {
-        "success": "Has cerrado sesión correctamente."
+        "success": "Has cerrado sesión correctamente.",
+        "error": "Ha ocurrido un error al tratar de cerrar sesión."
       },
     "dashboardSummary": {
       "overview": "Visión general",

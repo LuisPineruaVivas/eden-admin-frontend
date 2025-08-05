@@ -13,8 +13,7 @@ export const managementRoutes: RouteObject[] = [
       {
         element: <ProtectedRoute requiredPermission="CAN_SEE_USERS" />,
         children: [
-          { path: 'users', element: <DynamicPage page="managementUserList" />},
-          { path: 'users/:userId', element: <DynamicPage page="managementUserDetail" /> }
+          { path: 'users', element: <DynamicPage page="managementUserList" />}
         ]
       },
       {
