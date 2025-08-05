@@ -1,26 +1,22 @@
 import './index.css'
-import React from 'react'
-import { Navigate, BrowserRouter as Router, useRoutes } from 'react-router-dom'
-import { DynamicPage } from '@lib/lazyImports'
-import { ProtectedRoute } from '@components/ProtectedRoute'
-import useAuth from '@hooks/useAuth'
-import { PageSkeleton } from '@components/ui/PageSkeleton'
 
-import { Provider } from 'react-redux'
-import { store } from '@store/index'
+import i18next from 'i18next'
+import useAuth from '@hooks/useAuth'
 import QueryProvider from '@config/providers/QueryProvider'
+
+import { store } from '@store/index'
+import { Provider } from 'react-redux'
+import { DynamicPage } from '@lib/lazyImports'
+import { Toaster } from '@components/ui/Sonner'
+import { I18nextProvider } from 'react-i18next'
+import { PageSkeleton } from '@components/ui/PageSkeleton'
+import { ProtectedRoute } from '@components/ProtectedRoute'
 import { ThemeProvider } from '@config/providers/ThemeProvider'
-import { Toaster } from '@components/ui/Sonner'
-import { Toaster } from '@components/ui/Sonner'
 import { SearchProvider } from '@config/providers/SearchContext'
 import { ConfettiProvider } from '@config/providers/ConfettiProvider'
-import { ErrorManagerProvider } from '@config/providers/ErrorManagerProvider'
 import { ErrorStackIndicator } from '@components/dev/ErrorStackIndicator'
-import { I18nextProvider } from 'react-i18next'
-import AppRoutes from '@/routes/App.routes'
-import i18next from 'i18next'
-
-// Import your modules routes
+import { ErrorManagerProvider } from '@config/providers/ErrorManagerProvider'
+import { Navigate, BrowserRouter as Router, useRoutes } from 'react-router-dom'
 import { managementRoutes } from '@routes/management/management.routes'
 
 function AppRoutes() {
@@ -63,7 +59,7 @@ function App() {
               <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
                 <ErrorManagerProvider environment="debug">
                   <I18nextProvider i18n={i18next}>
-                    <PageTitleHandler />
+                    {/* <PageTitleHandler /> */}
                     <AppRoutes />
                   </I18nextProvider>
                   <ErrorStackIndicator environment="debug" />

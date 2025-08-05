@@ -1,8 +1,8 @@
-import type { ColumnDef } from '@tanstack/react-table'
 import { IUser } from '@/interface/models'
-import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/Avatar'
 import { Badge } from '@components/ui/Badge'
 import { UsersTableActions } from './users-table-actions'
+import type { ColumnDef, Getter } from '@tanstack/react-table'
+import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/Avatar'
 
 export const columns: ColumnDef<IUser>[] = [
   {
@@ -58,7 +58,7 @@ export const columns: ColumnDef<IUser>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
-    cell: ({ getValue }) => (
+    cell: ({ getValue }: { getValue: Getter<string> }) => (
       <Badge variant={getValue() === 'active' ? 'default' : 'secondary'}>
         {getValue()}
       </Badge>
