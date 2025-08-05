@@ -1,31 +1,30 @@
+import useAuth from '@hooks/useAuth'
 import { Link } from 'react-router-dom'
 import {
+  LogOut,
   BadgeCheck,
   ChevronsUpDown,
-
-  LogOut,
 } from 'lucide-react'
 import { 
   Avatar, 
-  AvatarFallback, 
-  AvatarImage 
+  AvatarImage, 
+  AvatarFallback 
 } from '@components/ui/Avatar'
 import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   useSidebar,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
 } from '@components/ui/Sidebar'
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuGroup,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@components/ui/DropdownMenu'
-import useAuth from '@hooks/useAuth'
 import { Skeleton } from '@components/ui/Skeleton'
 
 
@@ -34,7 +33,6 @@ export function NavUser() {
   const { user, logout, isValidating } = useAuth()
 
   if (isValidating) {
-    console.log("Validando....")
     return (
       <div className="flex items-center gap-2 p-2">
         <Skeleton className="h-8 w-8 rounded-full" />
