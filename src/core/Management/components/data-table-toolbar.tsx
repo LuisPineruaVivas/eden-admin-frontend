@@ -1,5 +1,4 @@
-import React from 'react'
-import { Input } from '@/components/ui/Input'
+import { Input } from '@components/ui/Input'
 import type { Table } from '@tanstack/react-table'
 
 interface DataTableToolbarProps<TData> {

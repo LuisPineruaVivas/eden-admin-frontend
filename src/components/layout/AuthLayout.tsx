@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
-import { SidebarProvider } from '@/components/ui/Sidebar'
-import { AppSidebar } from '@/components/layout/AppSidebar'
-import { Header } from '@/components/layout/Header'
+import { SidebarProvider } from '@components/ui/Sidebar'
+import { AppSidebar } from '@components/layout/AppSidebar'
+import { Header } from '@components/layout/Header'
 
 export function AuthLayout() {
   return (

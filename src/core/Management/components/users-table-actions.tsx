@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { IUser } from '@interface/models'
-import { Button } from '@components/ui/button'
+import { IUser } from '@/interface/models'
+import { Button } from '@components/ui/Button'
 import { Eye, Edit, Trash } from 'lucide-react'
 import { useHasPermission } from '@hooks/useHasPermission'
 

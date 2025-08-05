@@ -1,7 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table'
-import { IUser } from '@interface/models'
-import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/avatar'
-import { Badge } from '@components/ui/badge'
+import { IUser } from '@/interface/models'
+import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/Avatar'
+import { Badge } from '@components/ui/Badge'
 import { UsersTableActions } from './users-table-actions'
 
 export const columns: ColumnDef<IUser>[] = [

@@ -1,8 +1,8 @@
-import { AlertTriangle, Home, RefreshCw, ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/Button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card"
-import { Alert, AlertDescription } from "@components/ui/Alert"
+import { Button } from "@components/ui/Button"
 import { useTranslation } from "react-i18next"
+import { Alert, AlertDescription } from "@components/ui/Alert"
+import { AlertTriangle, Home, RefreshCw, ArrowLeft } from "lucide-react"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@components/ui/Card"
 
 
 

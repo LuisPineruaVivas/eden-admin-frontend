@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/Card"
+import { Button } from "@components/ui/Button"
+import { Badge } from "@components/ui/Badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@components/ui/Chart"
 import { AreaChart, Area, XAxis, CartesianGrid, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell } from "recharts"
 import {
   MoreHorizontal,

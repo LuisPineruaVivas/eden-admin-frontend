@@ -1,9 +1,13 @@
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { IconMailPlus, IconSend } from '@tabler/icons-react'
-import { showSubmittedData } from '@utils/ShowSubmittedData'
+import { Input } from '@components/ui/Input'
 import { Button } from '@components/ui/Button'
+import { userTypes } from '@core/Management/data'
+import { Textarea } from '@components/ui/Textarea'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SelectDropdown } from '@components/SelectDropdown'
+import { showSubmittedData } from '@utils/ShowSubmittedData'
+import { IconMailPlus, IconSend } from '@tabler/icons-react'
 import {
   Dialog,
   DialogClose,
@@ -12,7 +16,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/Dialog'
+} from '@components/ui/Dialog'
 import {
   Form,
   FormControl,
@@ -20,17 +24,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/Form'
-import { Input } from '@/components/ui/Input'
-import { Textarea } from '@/components/ui/Textarea'
-import { SelectDropdown } from '@/components/SelectDropdown'
-import { userTypes } from '../data/data'
+} from '@components/ui/Form'
+
+const emailRegex =
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const formSchema = z.object({
   email: z
     .string()
     .min(1, { message: 'Email is required.' })
-    .email({ message: 'Email is invalid.' }),
+    .regex(emailRegex, { message: 'Email is invalid.' }),
   role: z.string().min(1, { message: 'Role is required.' }),
   desc: z.string().optional(),
 })

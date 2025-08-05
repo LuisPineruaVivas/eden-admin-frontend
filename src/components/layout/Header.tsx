@@ -1,14 +1,14 @@
 //// filepath: src/components/layout/header.tsx
-import * as React from 'react'
-import { cn } from '@/lib/utils'
-import { Separator } from '@components/ui/Separator'
-import { SidebarTrigger } from '@components/ui/Sidebar'
-import { Button } from '@components/ui/Button'
+import { cn } from '@lib/utils'
 import { Sun, Moon} from 'lucide-react'
+import { Search } from '@components/Search'
+import { useEffect, useState } from 'react'
+import { Button } from '@components/ui/Button'
+import { Separator } from '@components/ui/Separator'
+import { LanguageSwitcher } from './LanguageSwitcher'
+import { SidebarTrigger } from '@components/ui/Sidebar'
 import { useTheme } from '@config/providers/ThemeProvider'
 import { ProfileDropdown } from '@components/ProfileDropdown'
-import { Search } from '@components/Search'
-import { LanguageSwitcher } from './LanguageSwitcher'
 
 interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   fixed?: boolean
@@ -21,10 +21,10 @@ export const Header = ({
   children,
   ...props
 }: HeaderProps) => {
-  const [offset, setOffset] = React.useState(0)
+  const [offset, setOffset] = useState(0)
   const { theme, setTheme } = useTheme()
 
-  React.useEffect(() => {
+  useEffect(() => {
     const onScroll = () => {
       setOffset(document.body.scrollTop || document.documentElement.scrollTop)
     }

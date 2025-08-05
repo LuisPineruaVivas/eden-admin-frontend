@@ -13,7 +13,7 @@ const pageMap: Record<string, () => Promise<{ default: React.ComponentType }>> =
   summary: () => import('@pages/Summary/Index'),
   
   //Modulo de
-  managementSummary: () => import('@pages/management/index'),
+  managementSummary: () => import('@pages/Management/index'),
   managementUserList: () => import('@core/Management/UserList.table'),
   managementPermissionList: () => import('@core/Management/UserPermission.table'),
 

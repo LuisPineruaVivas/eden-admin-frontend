@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { IconAlertTriangle } from '@tabler/icons-react'
-import { showSubmittedData } from '@/utils/ShowSubmittedData'
-import { Alert, AlertDescription, AlertTitle } from '@components/ui/Alert'
 import { Input } from '@components/ui/Input'
 import { Label } from '@components/ui/Label'
+import { User } from '@core/Management/data/schema'
+import { IconAlertTriangle } from '@tabler/icons-react'
 import { ConfirmDialog } from '@components/ConfirmDialog'
-import { User } from '../data/schema'
+import { showSubmittedData } from '@utils/ShowSubmittedData'
+import { Alert, AlertDescription, AlertTitle } from '@components/ui/Alert'
 
 interface Props {
   open: boolean

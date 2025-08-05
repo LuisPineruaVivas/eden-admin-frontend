@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import { DynamicPage } from '@/lib/lazyImports';
+import { DynamicPage } from '@lib/lazyImports';
 import { PermissionBasedRoute } from '@components/PermissionBasedRoute';
 
 export const managementRoutes: RouteObject[] = [

@@ -1,4 +1,5 @@
-import React from 'react';
+import { Button } from '@components/ui/Button';
+import { Environments } from '@/interface/models';
 import {
   Dialog,
   DialogContent,
@@ -7,8 +8,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from '@components/ui/Dialog';
-import { Button } from '@components/ui/Button';
-import { Environments } from '@/interface/models';
+import { Component, createContext, useContext, useState } from 'react';
 
 interface ErrorManagerContextProps {
   errors: Error[];
@@ -19,9 +19,9 @@ interface ErrorManagerContextProps {
   clearError: () => void;
 }
 
-const ErrorManagerContext = React.createContext<ErrorManagerContextProps | undefined>(undefined);
+const ErrorManagerContext = createContext<ErrorManagerContextProps | undefined>(undefined);
 
-export const ErrorBoundary = class extends React.Component<{ children: React.ReactNode }, { error: Error | null }> {
+export const ErrorBoundary = class extends Component<{ children: React.ReactNode }, { error: Error | null }> {
   constructor(props: { children: React.ReactNode }) {
     super(props);
     this.state = { error: null };
@@ -41,7 +41,7 @@ export const ErrorBoundary = class extends React.Component<{ children: React.Rea
 };
 
 export const ErrorManagerProvider: React.FC<{ environment: Environments, children: React.ReactNode }> = ({ environment, children }) => {
-  const [errors, setErrors] = React.useState<Error[]>([]);
+  const [errors, setErrors] = useState<Error[]>([]);
   
   const pushError = (error: Error) => {
     setErrors(prev => [...prev, error]);
@@ -112,7 +112,7 @@ export const ErrorManagerProvider: React.FC<{ environment: Environments, childre
 };
 
 export const useErrorManager = () => {
-  const ctx = React.useContext(ErrorManagerContext);
+  const ctx = useContext(ErrorManagerContext);
   if (!ctx) throw new Error('useErrorManager debe usarse dentro de <ErrorManagerProvider>');
   return ctx;
 };

@@ -1,27 +1,33 @@
-import * as React from "react"
-
 import { cn } from "@lib/utils"
 import { Slot } from "@radix-ui/react-slot"
-import { Input } from "@/components/ui/Input"
+import { Input } from "@components/ui/Input"
 import { PanelLeftIcon } from "lucide-react"
-import { Button } from "@/components/ui/Button"
-import { Skeleton } from "@/components/ui/Skeleton"
-import { Separator } from "@/components/ui/Separator"
+import { Button } from "@components/ui/Button"
+import { Skeleton } from "@components/ui/Skeleton"
+import { Separator } from "@components/ui/Separator"
+import { useBreakpoints } from "@hooks/useBreakpoints"
 import { cva, VariantProps } from "class-variance-authority"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/Tooltip"
+import { 
+  useContext, 
+  createContext, 
+  useCallback, 
+  useState, 
+  useEffect, 
+  useMemo 
+} from "react"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/Sheet"
-import { useBreakpoints } from "@/hooks/useBreakpoints"
+} from "@components/ui/Sheet"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@components/ui/Tooltip"
 
 // FINAL CONSTANTS VALUES OF UI
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
@@ -41,10 +47,10 @@ type SidebarContextProps = {
   toggleSidebar: () => void
 }
 
-const SidebarContext = React.createContext<SidebarContextProps | null>(null)
+const SidebarContext = createContext<SidebarContextProps | null>(null)
 
 function useSidebar() {
-  const context = React.useContext(SidebarContext)
+  const context = useContext(SidebarContext)
   if (!context) {
     throw new Error("useSidebar must be used within a SidebarProvider.")
   }
@@ -66,10 +72,10 @@ function SidebarProvider({
   onOpenChange?: (open: boolean) => void
 }) {
   const { isMobile } = useBreakpoints()
-  const [openMobile, setOpenMobile] = React.useState(false)
-  const [_open, _setOpen] = React.useState(defaultOpen)
+  const [openMobile, setOpenMobile] = useState(false)
+  const [_open, _setOpen] = useState(defaultOpen)
   const open = openProp ?? _open
-  const setOpen = React.useCallback(
+  const setOpen = useCallback(
     (value: boolean | ((value: boolean) => boolean)) => {
       const openState = typeof value === "function" ? value(open) : value
       if (setOpenProp) {
@@ -83,12 +89,12 @@ function SidebarProvider({
     [setOpenProp, open]
   )
 
-  const toggleSidebar = React.useCallback(() => {
+  const toggleSidebar = useCallback(() => {
     return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open)
   }, [isMobile, setOpen, setOpenMobile])
 
   // Adds a keyboard shortcut to toggle the sidebar.
-  React.useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
         event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
@@ -105,7 +111,7 @@ function SidebarProvider({
 
   const state = open ? "expanded" : "collapsed"
 
-  const contextValue = React.useMemo<SidebarContextProps>(
+  const contextValue = useMemo<SidebarContextProps>(
     () => ({
       state,
       open,
@@ -596,7 +602,7 @@ function SidebarMenuSkeleton({
   showIcon?: boolean
 }) {
   // Random width between 50 to 90%.
-  const width = React.useMemo(() => {
+  const width = useMemo(() => {
     return `${Math.floor(Math.random() * 40) + 50}%`
   }, [])
 

@@ -1,7 +1,7 @@
 // filepath: src/components/PermissionBasedRoute.tsx
 import { Navigate, Outlet } from 'react-router-dom';
-import { useHasPermission } from '@/hooks/useHasPermission';
-import { UserPermission } from '@/interface/permissions';
+import { useHasPermission } from '@hooks/useHasPermission';
+import { UserPermission } from '@/interface/permission';
 
 interface Props {
   requiredPermission: UserPermission;
