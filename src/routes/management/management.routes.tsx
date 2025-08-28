@@ -1,29 +1,29 @@
-import { RouteObject } from 'react-router-dom'
-import { DynamicPage } from '@lib/lazyImports'
-import { PermissionRoute } from '@components/PermissionRoute'
+import { RouteObject } from 'react-router-dom';
+import { DynamicPage } from '@lib/lazyImports';
+import { ProtectedRoute } from '@components/ProtectedRoute';
 
 export const managementRoutes: RouteObject[] = [
   {
     path: 'management',
-    // Aquí agregamos el guard para el índice
-    element: <PermissionRoute requiredPermission="CAN_SEE_USERS" />,
     children: [
       {
         index: true,
         element: <DynamicPage page="managementSummary" />
       },
       {
-        element: <PermissionRoute requiredPermission="CAN_SEE_USERS" />,
+        element: <ProtectedRoute requiredPermission="CAN_SEE_USERS" />,
         children: [
-          { path: 'users', element: <DynamicPage page="managementUserList" /> }
+          { path: 'users', element: <DynamicPage page="managementUserList" />}
         ]
       },
       {
-        element: <PermissionRoute requiredPermission="CAN_SEE_USERS" />,
+        element: <ProtectedRoute requiredPermission="CAN_SEE_USERS" />,
         children: [
           { path: 'permissionlist', element: <DynamicPage page="managementPermissionList" /> }
         ]
-      }
+      },
+      
+
     ]
   }
-]
+];

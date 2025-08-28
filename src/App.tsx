@@ -28,14 +28,14 @@ function AppRoutes() {
     <DynamicPage page="login" />
   );
 
-  // Solo un ProtectedRoute para el layout y autenticación
+  // Siempre llamamos a useRoutes, sin condicionar su invocación
   const routes = useRoutes([
     { path: '/login', element: loginElement },
     {
-      element: <ProtectedRoute />, // Aquí va el layout y el guardia de autenticación
+      element: <ProtectedRoute />,
       children: [
         { path: 'dashboard', element: <DynamicPage page="summary" /> },
-        ...managementRoutes, // Las rutas hijas usan PermissionRoute solo para permisos, sin layout
+        ...managementRoutes,
         { path: '/', element: <Navigate to="/dashboard" replace /> },
         { path: '*', element: <DynamicPage page="error404" /> }
       ]
@@ -45,6 +45,7 @@ function AppRoutes() {
     { path: '/500', element: <DynamicPage page="error500" /> }
   ]);
 
+  // Condicionalmente renderizamos el skeleton, pero ya se llamaron todos los Hooks
   return isValidating ? <PageSkeleton /> : routes;
 }
 
@@ -74,4 +75,4 @@ function App() {
   )
 }
 
-export default App;
+export default App
