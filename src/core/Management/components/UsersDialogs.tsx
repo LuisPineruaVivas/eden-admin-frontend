@@ -1,8 +1,8 @@
 import React from 'react'
 import { useUsers } from '@config/providers/UsersContext'
-import { UsersActionDialog } from './users-action-dialog'
-import { UsersInviteDialog } from './users-invite-dialog'
-import { UsersDeleteDialog } from './users-delete-dialog'
+import { UsersActionDialog } from './UsersActionDialog'
+import { UsersInviteDialog } from './UsersInviteDialog'
+import { UsersDeleteDialog } from './UsersDeleteDialog'
 
 export function UsersDialogs() {
   const { open, setOpen, currentRow, setCurrentRow } = useUsers()

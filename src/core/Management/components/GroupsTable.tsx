@@ -20,7 +20,7 @@ import {
   TableRow,
 } from '@components/ui/Table'
 import { IGroup } from '@interfaces/models'
-import { DataTablePagination } from './data-table-pagination'
+import { DataTablePagination } from './DataTablePagination'
 
 interface GroupsTableProps {
   columns: ColumnDef<IGroup>[]
@@ -91,9 +91,9 @@ export function GroupsTable({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 ))}
               </TableRow>

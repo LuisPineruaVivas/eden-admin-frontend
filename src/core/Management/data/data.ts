@@ -35,8 +35,8 @@ export const userTypes = [
     icon: IconChartBar,
   },
   {
-    label: 'Coordinator',
-    value: 'coordinatos',
+    label: 'Supervisor',
+    value: 'supervisor',
     icon: IconUserCheck,
   },
   {

@@ -34,7 +34,6 @@ export function DataTableColumnHeader({
   }
 
   const hideColumn = () => {
-    // For example, set a "hide" query parameter for this column.
     setSearchParams({ ...Object.fromEntries(searchParams), hide: sortKey })
   }
 

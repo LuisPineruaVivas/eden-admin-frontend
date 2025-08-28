@@ -1,5 +1,5 @@
 import { IGroup } from '@interfaces/models'
-import { GroupsTableActions } from './groups-table-actions'
+import { GroupsTableActions } from './GroupsTableActions'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/Avatar'
 
@@ -48,7 +48,7 @@ export const groupsColumns: ColumnDef<IGroup>[] = [
       return (
         <div className="flex items-center space-x-1">
           <div className="flex -space-x-2">
-            {visibleParticipants.map((participant, index) => (
+            {visibleParticipants.map((participant) => (
               <Avatar key={participant.id} className="h-8 w-8 border-2 border-background">
                 <AvatarImage
                   src={participant.avatar ? `${import.meta.env.VITE_API_URL}/${participant.avatar}` : undefined}
