@@ -6,6 +6,7 @@ import { IconAlertTriangle } from '@tabler/icons-react'
 import { ConfirmDialog } from '@components/ConfirmDialog'
 import { showSubmittedData } from '@utils/ShowSubmittedData'
 import { Alert, AlertDescription, AlertTitle } from '@components/ui/Alert'
+import { useTranslation } from "react-i18next"
 
 interface Props {
   open: boolean
@@ -14,10 +15,11 @@ interface Props {
 }
 
 export function UsersDeleteDialog({ open, onOpenChange, currentRow }: Props) {
+  const { t } = useTranslation("common")
   const [value, setValue] = useState('')
 
   const handleDelete = () => {
-    if (value.trim() !== currentRow.username) return
+    if (value.trim() !== currentRow.name) return
 
     onOpenChange(false)
     showSubmittedData(currentRow, 'The following user has been deleted:')
@@ -28,31 +30,31 @@ export function UsersDeleteDialog({ open, onOpenChange, currentRow }: Props) {
       open={open}
       onOpenChange={onOpenChange}
       handleConfirm={handleDelete}
-      disabled={value.trim() !== currentRow.username}
+      disabled={value.trim() !== currentRow.name}
       title={
         <span className='text-destructive'>
           <IconAlertTriangle
             className='stroke-destructive mr-1 inline-block'
             size={18}
           />{' '}
-          Delete User
+          {t("translation.management.user_delete_modal.title")}
         </span>
       }
       desc={
         <div className='space-y-4'>
           <p className='mb-2'>
-            Are you sure you want to delete{' '}
-            <span className='font-bold'>{currentRow.username}</span>?
+            {t("translation.management.user_delete_modal.description")}{' '}
+            <span className='font-bold'>{currentRow.name}</span>?
             <br />
-            This action will permanently remove the user with the role of{' '}
+            {t("translation.management.user_delete_modal.message")}{' '}
             <span className='font-bold'>
               {currentRow.role.toUpperCase()}
             </span>{' '}
-            from the system. This cannot be undone.
+            {t("translation.management.user_delete_modal.message_2")}
           </p>
 
           <Label className='my-2'>
-            Username:
+            {t("translation.management.user_delete_modal.username")}
             <Input
               value={value}
               onChange={(e) => setValue(e.target.value)}
@@ -61,14 +63,14 @@ export function UsersDeleteDialog({ open, onOpenChange, currentRow }: Props) {
           </Label>
 
           <Alert variant='destructive'>
-            <AlertTitle>Warning!</AlertTitle>
+            <AlertTitle>{t("translation.management.user_delete_modal.warning")}</AlertTitle>
             <AlertDescription>
-              Please be carefull, this operation can not be rolled back.
+              {t("translation.management.user_delete_modal.warning_description")}
             </AlertDescription>
           </Alert>
         </div>
       }
-      confirmText='Delete'
+      confirmText={t("translation.management.user_delete_modal.delete")}
       destructive
     />
   )

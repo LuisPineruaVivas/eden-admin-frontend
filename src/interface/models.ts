@@ -73,3 +73,25 @@ export interface LoginResponse {
   user: IUser;
   error?: string;
 }
+
+/**
+ * @interface IGroup
+ * @description This interface defines the structure of a group object.
+ */
+export interface IGroup {
+  id: string;
+  name: string;
+  supervisor: {
+    id: string;
+    name: string;
+    avatar: string | null;
+  };
+  participants: {
+    id: string;
+    name: string;
+    avatar: string | null;
+  }[];
+  participantCount: number;
+  created_at: string;
+  updated_at: string;
+}

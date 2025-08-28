@@ -1,18 +1,17 @@
-import { IUser } from '@interfaces/models'
+import { IGroup } from '@interfaces/models'
 import { Button } from '@components/ui/Button'
+
 import { Eye, Edit, Trash } from 'lucide-react'
 import { useHasPermission } from '@hooks/useHasPermission'
-import { useUsers } from '@config/providers/UsersContext'
 
-interface UsersTableActionsProps {
-  user: IUser
+interface GroupsTableActionsProps {
+  group: IGroup
 }
 
-export function UsersTableActions({ user }: UsersTableActionsProps) {
-  const { setOpen, setCurrentRow } = useUsers()
-  const canView = useHasPermission('CAN_SEE_USERS')
-  const canUpdate = useHasPermission('CAN_UPDATE_USERS')
-  const canDestroy = useHasPermission('CAN_DESTROY_USERS')
+export function GroupsTableActions({ group }: GroupsTableActionsProps) {
+  const canView = useHasPermission('CAN_SEE_SELLINGS_FORCE_GROUPS')
+  const canUpdate = useHasPermission('CAN_UPDATE_SELLINGS_FORCE_GROUPS')
+  const canDestroy = useHasPermission('CAN_DESTROY_SELLINGS_FORCE_GROUPS')
 
   return (
     <div className="flex space-x-2 justify-end">
@@ -30,10 +29,7 @@ export function UsersTableActions({ user }: UsersTableActionsProps) {
         <Button
           size="icon"
           variant="ghost"
-          onClick={() => {
-            setOpen('edit')
-            setCurrentRow(user)
-          }}
+          onClick={() => {}}
           title="Editar"
         >
           <Edit size={16} />
@@ -43,10 +39,7 @@ export function UsersTableActions({ user }: UsersTableActionsProps) {
         <Button
           size="icon"
           variant="ghost"
-          onClick={() => {
-            setOpen('delete')
-            setCurrentRow(user)
-          }}
+          onClick={() => {}}
           title="Eliminar"
         >
           <Trash size={16} />

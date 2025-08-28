@@ -1,5 +1,4 @@
 import axios, { type AxiosError } from 'axios'
-import React from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -30,6 +29,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@config/store'
 import { toast } from 'sonner'
 import { useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from "react-i18next"
 
 
 const formSchema = z
@@ -78,6 +78,7 @@ interface Props {
 }
 
 export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, pageSize, roleFilter }: Props) {
+  const { t } = useTranslation("common")
   const token = useSelector((state: RootState) => state.user.token)
   const queryClient = useQueryClient()
   const userRole = useSelector((state: RootState) => state.user.user.role)
@@ -91,9 +92,9 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
     resolver: zodResolver(formSchema),
     defaultValues: isEdit
       ? {
-          firstName: currentRow!.firstName,
-          lastName: currentRow!.lastName,
-          phone: currentRow!.phoneNumber,
+          firstName: currentRow!.name,
+          lastName: currentRow!.name,
+          phone: currentRow!.phone,
           email: currentRow!.email,
           role: String(currentRow!.role),
           password: '',
@@ -170,11 +171,11 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
     >
       <DialogContent className="sm:max-w-lg">
         <DialogHeader className="text-left">
-          <DialogTitle>{isEdit ? 'Edit User' : 'Add New User'}</DialogTitle>
+          <DialogTitle>{isEdit ? t("translation.management.user_edit_modal.title") : t("translation.management.user_create_modal.title")}</DialogTitle>
           <DialogDescription>
-            {isEdit ? 'Update the user here.' : 'Create new user here.'}{' '}
-            Click save when you&apos;re done.
-          </DialogDescription>
+            {isEdit ? t("translation.management.user_edit_modal.description") : t("translation.management.user_create_modal.description")}{' '}
+            {t("translation.management.user_edit_modal.saveMsg")}
+          </DialogDescription>          
         </DialogHeader>
         <div className="-mr-4 h-[26.25rem] w-full overflow-y-auto py-1 pr-4">
           <Form {...form}>
@@ -185,7 +186,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
                 name="firstName"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
-                    <FormLabel className="col-span-2 text-right">First Name</FormLabel>
+                    <FormLabel className="col-span-2 text-right">{t("translation.management.user_create_modal.firstname")}</FormLabel>
                     <FormControl>
                       <Input placeholder="John" className="col-span-4" autoComplete="off" {...field} />
                     </FormControl>
@@ -199,7 +200,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
                 name="lastName"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
-                    <FormLabel className="col-span-2 text-right">Last Name</FormLabel>
+                    <FormLabel className="col-span-2 text-right">{t("translation.management.user_create_modal.lastname")}</FormLabel>
                     <FormControl>
                       <Input placeholder="Doe" className="col-span-4" autoComplete="off" {...field} />
                     </FormControl>
@@ -213,7 +214,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
                 name="email"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
-                    <FormLabel className="col-span-2 text-right">Email</FormLabel>
+                    <FormLabel className="col-span-2 text-right">{t("translation.management.user_create_modal.email")}</FormLabel>
                     <FormControl>
                       <Input placeholder="john.doe@gmail.com" className="col-span-4" {...field} />
                     </FormControl>
@@ -224,10 +225,10 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
               {/* Phone Number */}
               <FormField
                 control={form.control}
-                name="phoneNumber"
+                name="phone"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
-                    <FormLabel className="col-span-2 text-right">Phone Number</FormLabel>
+                    <FormLabel className="col-span-2 text-right">{t("translation.management.user_create_modal.phone")}</FormLabel>
                     <FormControl>
                       <Input placeholder="+123456789" className="col-span-4" {...field} />
                     </FormControl>
@@ -241,7 +242,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
     name="role"
     render={({ field }) => (
       <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
-        <FormLabel className="col-span-2 text-right">Role</FormLabel>
+        <FormLabel className="col-span-2 text-right">{t("translation.management.user_create_modal.role")}</FormLabel>
         <SelectDropdown
           defaultValue={field.value}
           onValueChange={(v) => field.onChange(v)}
@@ -262,7 +263,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
                 name="password"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
-                    <FormLabel className="col-span-2 text-right">Password</FormLabel>
+                    <FormLabel className="col-span-2 text-right">{t("translation.management.user_create_modal.password")}</FormLabel>
                     <FormControl>
                       <PasswordInput placeholder="••••••••" className="col-span-4" {...field} />
                     </FormControl>
@@ -276,7 +277,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
-                    <FormLabel className="col-span-2 text-right">Confirm Password</FormLabel>
+                    <FormLabel className="col-span-2 text-right">{t("translation.management.user_create_modal.confirmPassword")}</FormLabel>
                     <FormControl>
                       <PasswordInput
                         disabled={!isPasswordTouched}
@@ -294,7 +295,7 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
         </div>
         <DialogFooter>
           <Button type="submit" form="user-form">
-            Save changes
+            {t("translation.management.user_create_modal.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>
