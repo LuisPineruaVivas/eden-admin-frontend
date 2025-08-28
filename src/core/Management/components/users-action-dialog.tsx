@@ -30,8 +30,6 @@ import { RootState } from '@config/store'
 import { toast } from 'sonner'
 import { useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from "react-i18next"
-import useAuth from '@/hooks/useAuth'
-import useUser from '@/hooks/useUser'
 
 
 const formSchema = z
@@ -80,14 +78,13 @@ interface Props {
 }
 
 export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, pageSize, roleFilter }: Props) {
-  const { user } = useUser();
-  const { token } = useAuth();
   const { t } = useTranslation("common")
-
+  const token = useSelector((state: RootState) => state.user.token)
   const queryClient = useQueryClient()
-  const isManagerRole = user?.role === 'manager'
+  const userRole = useSelector((state: RootState) => state.user.user.role)
+  const isManagerRole = userRole === 'manager'
   const allowedRoles = !currentRow && isManagerRole
-    ? userTypes.filter((r) => ['analyst', 'supervisor', 'seller'].includes(r.value))
+    ? userTypes.filter((r) => [3, 4, 5].includes(r.value))
     : userTypes
 
   const isEdit = Boolean(currentRow)
@@ -95,8 +92,8 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
     resolver: zodResolver(formSchema),
     defaultValues: isEdit
       ? {
-          firstName: currentRow!.name.split(' ')[0],
-          lastName: currentRow!.name.split(' ').slice(1).join(' '),
+          firstName: currentRow!.name,
+          lastName: currentRow!.name,
           phone: currentRow!.phone,
           email: currentRow!.email,
           role: String(currentRow!.role),

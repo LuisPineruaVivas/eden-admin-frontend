@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -20,8 +20,8 @@ import {
   TableRow,
 } from '@components/ui/Table'
 import { IUser } from '@interfaces/models'
-import { DataTableToolbar } from './DataTableToolbar'
-import { DataTablePagination } from './DataTablePagination'
+import { DataTableToolbar } from './data-table-toolbar'
+import { DataTablePagination } from './data-table-pagination'
 
 interface UsersTableProps {
   columns: ColumnDef<IUser>[]
@@ -31,12 +31,6 @@ interface UsersTableProps {
   pageSize: number
   onPageChange: (pageIndex: number) => void
   onPageSizeChange: (pageSize: number) => void
-}
-
-declare module '@tanstack/react-table' {
-  interface ColumnMeta<TData extends unknown, TValue> {
-    className?: string;
-  }
 }
 
 export function UsersTable({
@@ -67,7 +61,7 @@ export function UsersTable({
       columnVisibility,
       rowSelection,
     },
-    onPaginationChange: ({ pageIndex, pageSize }) => { // NOT WORKING
+    onPaginationChange: ({ pageIndex, pageSize }) => {
       onPageChange(pageIndex)
       onPageSizeChange(pageSize)
     },
@@ -99,9 +93,9 @@ export function UsersTable({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </TableHead>
                 ))}
               </TableRow>

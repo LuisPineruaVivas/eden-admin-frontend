@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-
+import { useSelector } from 'react-redux'
+import { RootState } from '@config/store'
 import {
   Collapsible,
   CollapsibleContent,
@@ -33,25 +34,22 @@ import {
   NavGroup as NavGroupType,
 } from './types'
 import { ChevronRight } from 'lucide-react'
-import useUser from '@/hooks/useUser'
 
 export function NavGroup({
   title,
   items,
-  requiredPermission, 
+  requiredPermission,
 }: NavGroupType) {
   const { state, isMobile } = useSidebar()
   const location = useLocation()
   const href = location.pathname + location.search
 
-  const { user } = useUser();
-
+  // Obtener el usuario y sus permisos
+  const user = useSelector((state: RootState) => state.user.user)
   const hasPermission = (perm?: string): boolean => {
     if (!perm) return true
     if (!user || !user.permissions) return false
-    // Assuming Permissions keys are the same as user.role values in lowercase
-    type PermissionRoles = keyof typeof user.permissions;
-    const roleKey = user.role.toLowerCase() as PermissionRoles;
+    const roleKey = user.role.toLowerCase()
     return (user.permissions[roleKey] || []).includes(perm)
   }
 
@@ -66,12 +64,12 @@ export function NavGroup({
       <SidebarMenu>
         {items.map((item) => {
           // Filtrar ítems sin permiso
-          if (!hasPermission(requiredPermission)) return null
+          if (!hasPermission(item.requiredPermission)) return null
 
           // Si tiene sub-items, filtrarlos
           if (item.items) {
-            const visibleSub = item.items.filter((_) =>
-              hasPermission(requiredPermission),
+            const visibleSub = item.items.filter((s) =>
+              hasPermission(s.requiredPermission),
             )
             if (!visibleSub.length) return null
 
@@ -92,7 +90,7 @@ export function NavGroup({
 
           // Ítem sin sub-items
           return (
-            <SidebarMenuLink key={typeof item.url === 'string' ? item.url : item.url?.pathname ?? ''} item={item as NavLink} href={href} />
+            <SidebarMenuLink key={item.url} item={item as NavLink} href={href} />
           )
         })}
       </SidebarMenu>
@@ -147,7 +145,7 @@ const SidebarMenuCollapsible = ({
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton
-            onClick={() => navigate(item.url ?? '')}
+            onClick={() => navigate(item.url)}
             tooltip={item.title}
           >
             {item.icon && <item.icon />}
@@ -159,7 +157,7 @@ const SidebarMenuCollapsible = ({
         <CollapsibleContent className="CollapsibleContent">
           <SidebarMenuSub>
             {item.items.map((sub) => (
-              <SidebarMenuSubItem key={sub.url.toString()}>
+              <SidebarMenuSubItem key={sub.url}>
                 <SidebarMenuSubButton
                   asChild
                   isActive={checkIsActive(href, sub)}
@@ -192,7 +190,7 @@ const SidebarMenuCollapsedDropdown = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <SidebarMenuButton
-            onClick={() => navigate(item.url ?? '')}
+            onClick={() => navigate(item.url)}
             tooltip={item.title}
             isActive={checkIsActive(href, item)}
           >
@@ -208,7 +206,7 @@ const SidebarMenuCollapsedDropdown = ({
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {item.items.map((sub) => (
-            <DropdownMenuItem key={sub.url.toString()} asChild>
+            <DropdownMenuItem key={sub.url} asChild>
               <Link
                 to={sub.url}
                 className={checkIsActive(href, sub) ? 'bg-secondary' : ''}

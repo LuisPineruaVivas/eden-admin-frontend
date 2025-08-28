@@ -1,6 +1,6 @@
 import { IUser } from '@interfaces/models'
 import { Badge } from '@components/ui/Badge'
-import { UsersTableActions } from './UsersTableColumns'
+import { UsersTableActions } from './users-table-actions'
 import type { ColumnDef, Getter } from '@tanstack/react-table'
 import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/Avatar'
 
