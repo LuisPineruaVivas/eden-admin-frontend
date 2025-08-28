@@ -29,6 +29,7 @@ interface UsersTableProps {
   pageCount: number
   pageIndex: number
   pageSize: number
+  totalRows: number
   onPageChange: (pageIndex: number) => void
   onPageSizeChange: (pageSize: number) => void
 }
@@ -39,6 +40,7 @@ export function UsersTable({
   pageCount,
   pageIndex,
   pageSize,
+  totalRows,
   onPageChange,
   onPageSizeChange,
 }: UsersTableProps) {
@@ -133,7 +135,10 @@ export function UsersTable({
         </Table>
       </div>
 
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        totalRows={totalRows}
+        selectedRows={Object.keys(rowSelection).length}
+      />
     </div>
   )
 }
