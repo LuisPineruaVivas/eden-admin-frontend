@@ -12,14 +12,23 @@ type PostFunction = <T>(
 export const POST: PostFunction = async <T>(
   url, body, token, headers = {}
 ) => {
-  // Si no recibes token por parámetro, lo sacas del store
   const authToken = token || store.getState().user.token
-  const response = await axios.post<T>(url, body, {
+
+  const payload = (
+    body != null
+    && typeof body === 'object'
+    && 'body' in (body as Record<string, unknown>)
+  )
+    ? (body as Record<string, unknown>).body
+    : body
+
+  const response = await axios.post<T>(url, payload, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: authToken ? `Bearer ${authToken}` : '',
       ...headers,
     },
   })
-  return response as PostResponse<T>
+
+return response as PostResponse<T>
 }

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useUsers } from '@config/providers/UsersContext'
-import { UsersActionDialog } from './users-action-dialog'
-import { UsersDeleteDialog } from './users-delete-dialog'
-import { UsersStatusDialog } from './users-status-dialog'
-import { UsersViewDialog } from './users-view-dialog'
+import { UsersActionDialog } from './UsersActionDialog'
+import { UsersDeleteDialog } from './UsersDeleteDialog'
+import { UsersStatusDialog } from './UsersStatusDialog'
+import { UsersViewDialog } from './UsersViewDialog'
 
 interface UsersDialogsProps {
   pageIndex: number
@@ -58,19 +58,20 @@ export function UsersDialogs({ pageIndex, pageSize, roleFilter }: UsersDialogsPr
         />
       )}
 
-     {/* Status */}
+      {/* Status */}
       {currentRow && (
-    <UsersStatusDialog
-      key={`status-${currentRow.id}`}
-      currentRow={currentRow}
-      open={open === 'status'}
-      onOpenChange={(isOpen) => {
-        setOpen(isOpen ? 'status' : null)
-        if (!isOpen) setCurrentRow(null)
-      }}
-    />
-  )}
-  {/* View */}
+        <UsersStatusDialog
+          key={`status-${currentRow.id}`}
+          currentRow={currentRow}
+          open={open === 'status'}
+          onOpenChange={(isOpen) => {
+            setOpen(isOpen ? 'status' : null)
+            if (!isOpen) setCurrentRow(null)
+          }}
+        />
+      )}
+
+      {/* View */}
       {currentRow && (
         <UsersViewDialog
           key={`view-${currentRow.id}`}

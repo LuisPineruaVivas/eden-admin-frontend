@@ -13,6 +13,91 @@
       "badCredentialsError": "Invalid credentials, please check your email and password.",
       "inactiveUserError": "Inactive user, please contact the administrator for user activation."
     },
+    "common": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "deleting": "Deleting...",
+      "processing": "Processing..."
+    },
+    "management": {
+      "user_view_dialog": {
+        "title": "View User",
+        "description": "Details for {{name}}",
+        "fields": {
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "national_id": "National ID",
+          "identity": "Identity",
+          "role": "Role",
+          "status": "Status",
+          "close": "Close"
+        }
+      },
+      "user_table": {
+        "actions_label": "Options",
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete",
+        "status": "Status"
+      },
+      "user_form": {
+        "title": {
+          "add": "Add User",
+          "edit": "Edit User"
+        },
+        "description": {
+          "add": "Here you can create a new user",
+          "edit": "Here you can edit the user's information"
+        },
+        "fields": {
+          "firstName": "First Name",
+          "lastName": "Last Name",
+          "email": "Email",
+          "phone": "Phone",
+          "nationalId": "National ID",
+          "role": "Role",
+          "password": "Password",
+          "confirmPassword": "Confirm Password"
+        },
+        "errors": {
+          "firstName": "First name is required",
+          "lastName": "Last name is required",
+          "emailFormat": "Invalid email format",
+          "phone": "Phone is required",
+          "nationalIdFormat": "Invalid national ID format",
+          "role": "Role is required",
+          "passwordLength": "Password must be at least 8 characters",
+          "passwordMatch": "Passwords must match"
+        },
+        "success": {
+          "add": "User added successfully",
+          "edit": "User updated successfully"
+        },
+        "error": {
+          "add": "Error adding user",
+          "edit": "Error updating user"
+        }
+      },
+      "user_status_dialog": {
+        "title": "Change User Status",
+        "description": "Select new status for {{name}}",
+        "select_placeholder": "-- Select a status --",
+        "options": {
+          "active": "Active",
+          "inactive": "Inactive"
+        },
+        "success": "Status updated successfully",
+        "error": "Error updating status"
+      },
+      "user_delete_dialog": {
+        "title": "Delete user",
+        "description": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+        "success": "User deleted successfully",
+        "error": "Error deleting user"
+      }
+      },
     "layoutsError": {
       "error500": {
         "title": "Error 500",
