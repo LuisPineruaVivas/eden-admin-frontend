@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@components/ui/Button'
+import { PhoneInput } from '@components/ui/PhoneInput'
 import {
   Dialog,
   DialogContent,
@@ -32,20 +33,18 @@ import { toast } from 'sonner'
 import { useQueryClient } from '@tanstack/react-query'
 
 
-const formSchema = z
-  .object({
-    firstName: z.string().min(1, { message: 'First Name is required.' }),
-    lastName: z.string().min(1, { message: 'Last Name is required.' }),
-    phoneNumber: z.string().min(1, { message: 'Phone number is required.' }),
-    email: z
-      .string()
-      .min(1, { message: 'Email is required.' })
-      .email({ message: 'Email is invalid.' }),
-    role: z.string().min(1, { message: 'Role is required.' }),
-    password: z.string().transform((pwd) => pwd.trim()),
-    confirmPassword: z.string().transform((pwd) => pwd.trim()),
-    isEdit: z.boolean(),
-  })
+const formSchema = z.object({
+  firstName: z.string().min(1, { message: 'First Name is required.' }),
+  lastName: z.string().min(1, { message: 'Last Name is required.' }),
+  phone: z.string().min(1, { message: 'Phone is required.' }),
+  nationalId: z.string().min(1, { message: 'National ID is required.' })
+  .regex(/^[vVeE]-\d+$/, { message: 'Formato de cédula inválido. Ej: V-12345678' }),
+  email: z.string().min(1, { message: 'Email is required.' }).email({ message: 'Email is invalid.' }),
+  role: z.string().min(1, { message: 'Role is required.' }),
+  password: z.string().transform((pwd) => pwd.trim()),
+  confirmPassword: z.string().transform((pwd) => pwd.trim()),
+  isEdit: z.boolean(),
+})
   .superRefine(({ isEdit, password, confirmPassword }, ctx) => {
     if (!isEdit || (isEdit && password !== '')) {
       if (!password) {
@@ -77,6 +76,23 @@ interface Props {
   roleFilter?: string
 }
 
+function unformatPhone(formatted: string): string {
+  const digits = formatted.replace(/[^\d+]/g, '')
+  return digits.startsWith('+') ? digits : `+${digits}`
+}
+
+function formatPhone(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  if (/^\+58 \(\d{3}\) \d{3}-\d{4}$/.test(phone)) return phone;
+  if ((digits.length === 12 && digits.startsWith("58")) || (digits.length === 13 && digits.startsWith("58"))) {
+    return `+58 (${digits.slice(2, 5)}) ${digits.slice(5, 8)}-${digits.slice(8, 12)}`;
+  }
+  if (digits.length === 11 && digits.startsWith("04")) {
+    return `+58 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7, 11)}`;
+  }
+  return phone;
+}
+
 export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, pageSize, roleFilter }: Props) {
   const token = useSelector((state: RootState) => state.user.token)
   const queryClient = useQueryClient()
@@ -90,48 +106,70 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
   const form = useForm<UserForm>({
     resolver: zodResolver(formSchema),
     defaultValues: isEdit
-      ? {
-          firstName: currentRow!.firstName,
-          lastName: currentRow!.lastName,
-          phone: currentRow!.phoneNumber,
-          email: currentRow!.email,
-          role: String(currentRow!.role),
-          password: '',
+    ? (() => {
+        const [firstName, ...rest] = currentRow!.name.split(' ')
+        return {
+          firstName:    firstName ?? '',
+          lastName:     rest.join(' ') ?? '',
+          email:        currentRow!.email       ?? '',
+          phone:        unformatPhone(currentRow!.phone),
+          nationalId:   currentRow!.national_id ?? '',
+          role: String(
+            allowedRoles.find(
+              r => r.label.toLowerCase() === currentRow!.role.toLowerCase()
+            )?.value ?? ''
+          ),
+          password:        '',
           confirmPassword: '',
-          isEdit: true,
+          isEdit:          true,
         }
-      : {
-          firstName: '',
-          lastName: '',
-          phone: '',
-          email: '',
-          role: '',
-          password: '',
-          confirmPassword: '',
-          isEdit: false,
-        },
-  })
+      })()
+    : {
+        firstName:       '',
+        lastName:        '',
+        email:           '',
+        phone:           '',
+        nationalId:      '',
+        role:            '',
+        password:        '',
+        confirmPassword: '',
+        isEdit:          false,
+      },
+})
 
   const isPasswordTouched = !!form.formState.dirtyFields.password
 
   const onSubmit = async (values: UserForm) => {
-    const roleId = parseInt(values.role, 10)
-    const payload = {
-      user: {
-        name: values.firstName + ' ' + values.lastName,
-        email: values.email,
-        phone: values.phoneNumber,
-        password: values.password,
-        password_confirmation: values.confirmPassword,
-        role_id: roleId,
-      },
+  const roleId = parseInt(values.role, 10)
+  const formattedPhone = formatPhone(values.phone)
+  const formattedNationalId = values.nationalId.toUpperCase()
+  const payload = {
+    user: {
+      name: `${values.firstName} ${values.lastName}`,
+      email: values.email,
+      phone: formattedPhone,
+      national_id: formattedNationalId,
+      password: values.password,
+      password_confirmation: values.confirmPassword,
+      ...(isEdit ? {} : { role_id: roleId }),
+    },
+  }
+
+  try {
+    if (isEdit && currentRow) {
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/manager/users/${currentRow.id}`,
+        payload,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+    } else {
+      await POST(
+        `${import.meta.env.VITE_API_URL}/manager/users`,
+        payload,
+        token
+      )
     }
-    try {
-    await POST(
-      `${import.meta.env.VITE_API_URL}/manager/users`,
-      payload,
-      token
-    )
+
     toast.success(isEdit ? 'User updated' : 'User created')
     queryClient.invalidateQueries(['users', token, pageIndex, pageSize, roleFilter])
     form.reset()
@@ -159,15 +197,38 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
     }
   }
 }
-
   return (
     <Dialog
-      open={open}
-      onOpenChange={(state) => {
-        form.reset()
-        onOpenChange(state)
-      }}
-    >
+  open={open}
+  onOpenChange={(state) => {
+    if (state && currentRow) {
+      form.reset({
+        firstName:      currentRow.firstName   ?? '',
+        lastName:       currentRow.lastName    ?? '',
+        email:          currentRow.email       ?? '',
+        phone:          unformatPhone(currentRow.phone),
+        nationalId:     currentRow.nationalId  ?? '',
+        role:           String(currentRow.role ?? ''),
+        password:       '',
+        confirmPassword:'',
+        isEdit:         true,
+      })
+    } else {
+      form.reset({
+        firstName:      '',
+        lastName:       '',
+        email:          '',
+        phone:          '',
+        nationalId:     '',
+        role:           '',
+        password:       '',
+        confirmPassword:'',
+        isEdit:         false,
+      })
+    }
+    onOpenChange(state)
+  }}
+>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader className="text-left">
           <DialogTitle>{isEdit ? 'Edit User' : 'Add New User'}</DialogTitle>
@@ -221,41 +282,59 @@ export function UsersActionDialog({ currentRow, open, onOpenChange, pageIndex, p
                   </FormItem>
                 )}
               />
-              {/* Phone Number */}
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
-                    <FormLabel className="col-span-2 text-right">Phone Number</FormLabel>
-                    <FormControl>
-                      <Input placeholder="+123456789" className="col-span-4" {...field} />
-                    </FormControl>
-                    <FormMessage className="col-span-4 col-start-3" />
-                  </FormItem>
-                )}
-              />
+              {/*Phone and nationalid */}
+  <FormField
+  control={form.control}
+  name="phone"
+  render={({ field }) => (
+    <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
+      <FormLabel className="col-span-2 text-right">Phone Number</FormLabel>
+      <FormControl>
+        <PhoneInput
+          className="col-span-4"
+          value={field.value}
+          onChange={field.onChange}
+          defaultCountry="VE"
+          placeholder="Ej: 412 1234567"
+        />
+      </FormControl>
+      <FormMessage className="col-span-4 col-start-3" />
+    </FormItem>
+  )}
+/>
+<FormField
+  control={form.control}
+  name="nationalId"
+  render={({ field }) => (
+    <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
+      <FormLabel className="col-span-2 text-right">National ID</FormLabel>
+      <FormControl>
+        <Input placeholder="V-12345670" className="col-span-4" {...field} />
+      </FormControl>
+      <FormMessage className="col-span-4 col-start-3" />
+    </FormItem>
+  )}
+/>
               {/* Role */}
-              <FormField
+              {!isEdit && (
+  <FormField
     control={form.control}
     name="role"
     render={({ field }) => (
-      <FormItem className="grid grid-cols-6 items-center gap-x-4 gap-y-1">
+      <FormItem className="grid grid-cols-6 gap-x-4">
         <FormLabel className="col-span-2 text-right">Role</FormLabel>
         <SelectDropdown
-          defaultValue={field.value}
-          onValueChange={(v) => field.onChange(v)}
+          value={field.value}
+          onValueChange={field.onChange}
           placeholder="Select a role"
+          items={allowedRoles.map(r => ({ label: r.label, value: String(r.value) }))}
           className="col-span-4"
-          items={allowedRoles.map(({ label, value }) => ({
-            label,
-            value: String(value),
-          }))}
         />
         <FormMessage className="col-span-4 col-start-3" />
       </FormItem>
     )}
   />
+  )}
               {/* Password */}
               <FormField
                 control={form.control}

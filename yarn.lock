@@ -2840,6 +2840,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-phone-number-input@npm:^3.1.37":
+  version: 3.1.37
+  resolution: "@types/react-phone-number-input@npm:3.1.37"
+  dependencies:
+    react-phone-number-input: "npm:*"
+  checksum: 10c0/ac5a14da70f69740615131a6c91e509e795aabe1d2181d2a7af0efbf936be492fa5ca947226d6ab5b7ef92702a4156395fd087a35faa746b0da2f4a2b4cda554
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:^19.1.8":
   version: 19.1.8
   resolution: "@types/react@npm:19.1.8"
@@ -3689,6 +3698,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"classnames@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "classnames@npm:2.5.1"
+  checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
+  languageName: node
+  linkType: hard
+
 "cli-cursor@npm:^3.1.0":
   version: 3.1.0
   resolution: "cli-cursor@npm:3.1.0"
@@ -3992,6 +4008,13 @@ __metadata:
     typescript:
       optional: true
   checksum: 10c0/1c1703be4f02a250b1d6ca3267e408ce16abfe8364193891afc94c2d5c060b69611fdc8d97af74b7e6d5d1aac0ab2fb94d6b079573146bc2d756c2484ce5f0ee
+  languageName: node
+  linkType: hard
+
+"country-flag-icons@npm:^1.5.17":
+  version: 1.5.19
+  resolution: "country-flag-icons@npm:1.5.19"
+  checksum: 10c0/f6adeadd7a406c593c8cfe4b3f0630d937188f79854755677448bd89024d404307b7a38b03612d5310c77c45ea535e0c409f24dc80d787673f1e3b35ddae43de
   languageName: node
   linkType: hard
 
@@ -4400,6 +4423,7 @@ __metadata:
     "@types/node": "npm:^24.0.4"
     "@types/react": "npm:^19.1.8"
     "@types/react-dom": "npm:^19.1.6"
+    "@types/react-phone-number-input": "npm:^3.1.37"
     "@vitejs/plugin-react-swc": "npm:^3.10.2"
     axios: "npm:^1.10.0"
     class-variance-authority: "npm:^0.7.1"
@@ -4427,6 +4451,7 @@ __metadata:
     react-dom: "npm:^19.1.0"
     react-hook-form: "npm:^7.62.0"
     react-i18next: "npm:^15.5.3"
+    react-phone-number-input: "npm:^3.4.12"
     react-redux: "npm:^9.2.0"
     react-router-dom: "npm:^7.6.2"
     recharts: "npm:^3.1.0"
@@ -6037,6 +6062,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"input-format@npm:^0.3.10":
+  version: 0.3.14
+  resolution: "input-format@npm:0.3.14"
+  dependencies:
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ">=18.1.0"
+    react-dom: ">=18.1.0"
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/37bb23e0dd15223b2ac8a25b09bc26e4d613cbd93c040dcdb490a1661dd0782c2742ad819b9dbd4b154a9e09ce1a69046a78e4ee943171b7ec86b07b50324ad6
+  languageName: node
+  linkType: hard
+
 "inquirer@npm:8.2.5":
   version: 8.2.5
   resolution: "inquirer@npm:8.2.5"
@@ -6647,6 +6689,13 @@ __metadata:
     prelude-ls: "npm:^1.2.1"
     type-check: "npm:~0.4.0"
   checksum: 10c0/effb03cad7c89dfa5bd4f6989364bfc79994c2042ec5966cb9b95990e2edee5cd8969ddf42616a0373ac49fac1403437deaf6e9050fbbaa3546093a59b9ac94e
+  languageName: node
+  linkType: hard
+
+"libphonenumber-js@npm:^1.11.20":
+  version: 1.12.15
+  resolution: "libphonenumber-js@npm:1.12.15"
+  checksum: 10c0/d715c938f3e9a331b35f0dd93f5c194f7b19321b9e190b05ca76fab88df5c851936752f4354bea812df5d1d4f432a9133dc2c7199e444c7dbf89bb5b9cc75c3a
   languageName: node
   linkType: hard
 
@@ -8024,6 +8073,22 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 10c0/33977da7a5f1a287936a0c85639fec6ca74f4f15ef1e59a6bc20338fc73dc69555381e211f7a3529b8150a1f71e4225525b41b60b52965bda53ce7d47377ada1
+  languageName: node
+  linkType: hard
+
+"react-phone-number-input@npm:*, react-phone-number-input@npm:^3.4.12":
+  version: 3.4.12
+  resolution: "react-phone-number-input@npm:3.4.12"
+  dependencies:
+    classnames: "npm:^2.5.1"
+    country-flag-icons: "npm:^1.5.17"
+    input-format: "npm:^0.3.10"
+    libphonenumber-js: "npm:^1.11.20"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 10c0/96724e10c18c410602a1d03a93dfa9688b72a1f242891a1d565c4f77718f37463603b390360b8499320d5c5853feddb489bc17129c804a548f0c050f1bdef7e2
   languageName: node
   linkType: hard
 

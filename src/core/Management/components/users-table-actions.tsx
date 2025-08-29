@@ -1,51 +1,67 @@
-import { useNavigate } from 'react-router-dom'
+import { useUsers } from '@config/providers/UsersContext'
 import { IUser } from '@interfaces/models'
-import { Button } from '@components/ui/Button'
-import { Eye, Edit, Trash } from 'lucide-react'
 import { useHasPermission } from '@hooks/useHasPermission'
+import { Button } from '@components/ui/Button'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from '@components/ui/DropdownMenu'
+import { MoreHorizontal, Eye, Edit, Trash, CheckCircle } from 'lucide-react'
 
 interface UsersTableActionsProps {
   user: IUser
 }
 
 export function UsersTableActions({ user }: UsersTableActionsProps) {
-  const navigate = useNavigate()
-  const canView = useHasPermission('CAN_SEE_USERS')
-  const canUpdate = useHasPermission('CAN_UPDATE_USERS')
+  const { setOpen, setCurrentRow } = useUsers()
+  const canView    = useHasPermission('CAN_SEE_USERS')
+  const canUpdate  = useHasPermission('CAN_UPDATE_USERS')
   const canDestroy = useHasPermission('CAN_DESTROY_USERS')
 
   return (
-    <div className="flex space-x-2">
-      {canView && (
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={() => navigate(`users/${user.id}`)}
-          title="Ver"
-        >
-          <Eye size={16} />
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button size="icon" variant="ghost" title="Opciones">
+          <MoreHorizontal />
         </Button>
-      )}
-      {canUpdate && (
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={() => navigate(`users/${user.id}/edit`)}
-          title="Editar"
-        >
-          <Edit size={16} />
-        </Button>
-      )}
-      {canDestroy && (
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={() => {/* disparar diálogo de borrado */ }}
-          title="Eliminar"
-        >
-          <Trash size={16} />
-        </Button>
-      )}
-    </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {canView && (
+          <DropdownMenuItem onClick={() => {
+            setCurrentRow(user)
+            setOpen('view')
+          }}>
+            <Eye className="mr-2 h-4 w-4" /> View
+          </DropdownMenuItem>
+        )}
+        {canUpdate && (
+          <DropdownMenuItem onClick={() => {
+            setCurrentRow(user)
+            setOpen('edit')
+          }}>
+            <Edit className="mr-2 h-4 w-4" /> Edit
+          </DropdownMenuItem>
+        )}
+        {canDestroy && (
+          <DropdownMenuItem onClick={() => {
+            setCurrentRow(user)
+            setOpen('delete')
+          }}>
+            <Trash className="mr-2 h-4 w-4" /> Delete
+          </DropdownMenuItem>
+        )}
+        <DropdownMenuSeparator />
+        {/* Status */}
+        <DropdownMenuItem onClick={() => {
+          setCurrentRow(user)
+          setOpen('status')
+        }}>
+          <CheckCircle className="mr-2 h-4 w-4" /> Status
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

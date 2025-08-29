@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { Input } from '@components/ui/Input'
-import { Label } from '@components/ui/Label'
-import { User } from '@core/Management/data/schema'
-import { IconAlertTriangle } from '@tabler/icons-react'
+import { useSelector } from 'react-redux'
+import { useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
+import { Delete } from '@config/fetcher/Delete'
 import { ConfirmDialog } from '@components/ConfirmDialog'
-import { showSubmittedData } from '@utils/ShowSubmittedData'
-import { Alert, AlertDescription, AlertTitle } from '@components/ui/Alert'
+import { IconAlertTriangle } from '@tabler/icons-react'
+import type { RootState } from '@config/store'
+import type { User } from '@core/Management/data/schema'
 
 interface Props {
   open: boolean
@@ -14,62 +14,40 @@ interface Props {
 }
 
 export function UsersDeleteDialog({ open, onOpenChange, currentRow }: Props) {
-  const [value, setValue] = useState('')
+  const token = useSelector((state: RootState) => state.user.token)
+  const queryClient = useQueryClient()
 
-  const handleDelete = () => {
-    if (value.trim() !== currentRow.username) return
-
-    onOpenChange(false)
-    showSubmittedData(currentRow, 'The following user has been deleted:')
+  const handleDelete = async () => {
+    try {
+      await Delete(
+        `${import.meta.env.VITE_API_URL}/manager/users/${currentRow.id}`,
+        token
+      )
+      toast.success('User deleted successfully')
+      queryClient.invalidateQueries(['users', token])
+      onOpenChange(false)
+    } catch (error) {
+      console.error(error)
+      toast.error('Error deleting user')
+    }
   }
 
   return (
     <ConfirmDialog
       open={open}
       onOpenChange={onOpenChange}
-      handleConfirm={handleDelete}
-      disabled={value.trim() !== currentRow.username}
       title={
-        <span className='text-destructive'>
-          <IconAlertTriangle
-            className='stroke-destructive mr-1 inline-block'
-            size={18}
-          />{' '}
-          Delete User
+        <span className="flex items-center text-destructive">
+          <IconAlertTriangle className="mr-2" size={18} /> Delete User
         </span>
       }
       desc={
-        <div className='space-y-4'>
-          <p className='mb-2'>
-            Are you sure you want to delete{' '}
-            <span className='font-bold'>{currentRow.username}</span>?
-            <br />
-            This action will permanently remove the user with the role of{' '}
-            <span className='font-bold'>
-              {currentRow.role.toUpperCase()}
-            </span>{' '}
-            from the system. This cannot be undone.
-          </p>
-
-          <Label className='my-2'>
-            Username:
-            <Input
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              placeholder='Enter username to confirm deletion.'
-            />
-          </Label>
-
-          <Alert variant='destructive'>
-            <AlertTitle>Warning!</AlertTitle>
-            <AlertDescription>
-              Please be carefull, this operation can not be rolled back.
-            </AlertDescription>
-          </Alert>
-        </div>
+        <>Are you sure you want to delete <strong>{currentRow.username}</strong>? This action cannot be undone.</>
       }
-      confirmText='Delete'
+      cancelBtnText="Cancel"
+      confirmText="Confirm"
       destructive
+      handleConfirm={handleDelete}
     />
   )
 }
