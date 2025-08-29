@@ -23,7 +23,11 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
   const [searchParams, setSearchParams] = useSearchParams()
   const pageIndex = Number(searchParams.get('page') || '0')
   const pageSize = Number(searchParams.get('pageSize') || '10')
-  const pageCount = Math.ceil(totalRows / pageSize)
+
+  // Asegura que totalRows y pageSize sean válidos para evitar NaN
+  const safeTotalRows = Number.isFinite(totalRows) && totalRows > 0 ? totalRows : 0
+  const safePageSize = Number.isFinite(pageSize) && pageSize > 0 ? pageSize : 10
+  const pageCount = Math.max(1, Math.ceil(safeTotalRows / safePageSize))
 
   const setPageIndex = (index: number) => {
     const params = new URLSearchParams(searchParams)
@@ -48,14 +52,14 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
       style={{ overflowClipMargin: 1 }}
     >
       <div className='text-muted-foreground hidden flex-1 text-sm sm:block'>
-        {selectedRows} of {totalRows} row(s) selected.
+        {selectedRows} of {safeTotalRows} row(s) selected.
       </div>
       <div className='flex items-center sm:space-x-6 lg:space-x-8'>
         <div className='flex items-center space-x-2'>
           <p className='hidden text-sm font-medium sm:block'>Rows per page</p>
-          <Select value={`${pageSize}`} onValueChange={(value) => setPageSize(Number(value))}>
+          <Select value={`${safePageSize}`} onValueChange={(value) => setPageSize(Number(value))}>
             <SelectTrigger className='h-8 w-[70px]'>
-              <SelectValue placeholder={`${pageSize}`} />
+              <SelectValue placeholder={`${safePageSize}`} />
             </SelectTrigger>
             <SelectContent side='top'>
               {[10, 20, 30, 40, 50].map((size) => (

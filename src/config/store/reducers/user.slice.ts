@@ -7,11 +7,13 @@ export interface TokenState {
 
 export interface UserState {
   user: IUser | null;
+  isValidating: boolean; // <-- AÑADIR
 }
 
 const initialState: UserState & TokenState = {
   user: null,
   token: localStorage.getItem("token"),
+  isValidating: true, // <-- INICIAR EN TRUE POR DEFECTO
 };
 
 export const userSlice = createSlice({
@@ -24,6 +26,7 @@ export const userSlice = createSlice({
     },
     setUser: (state, action: PayloadAction<UserState>) => {
       state.user = action.payload.user;
+      state.isValidating = false; // <-- FINALIZAR VALIDACIÓN
     },
     setProfilePicture: (state, action: PayloadAction<string | null>) => {
       if (state.user) {
@@ -34,6 +37,11 @@ export const userSlice = createSlice({
       localStorage.removeItem("token");
       state.user = null;
       state.token = null;
+      state.isValidating = false; // <-- FINALIZAR VALIDACIÓN
+    },
+    // Si necesitas controlar la validación manualmente en algún punto
+    setValidating: (state, action: PayloadAction<boolean>) => {
+      state.isValidating = action.payload;
     },
   },
 });
@@ -42,7 +50,8 @@ export const {
   setUser,
   clearUser,
   setToken,
-  setProfilePicture
+  setProfilePicture,
+  setValidating, // <-- EXPORTAR
 } = userSlice.actions;
 
 export default userSlice.reducer;
