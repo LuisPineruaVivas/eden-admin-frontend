@@ -19,22 +19,17 @@ export default function useAuth() {
   const dispatch = useDispatch()
   const isAuthenticated = !!user
 
-  // Este useEffect ahora es el único responsable de iniciar la verificación
   useEffect(() => {
     const tokenFromCookie = Cookies.get('token')
     if (tokenFromCookie && !user) {
-      // Si hay token pero no usuario, disparamos la verificación.
-      // El estado `isValidating` ya es `true` por defecto.
+      
       dispatch(verifyAuth(tokenFromCookie))
     } else {
-      // Si no hay token, la validación termina inmediatamente.
       dispatch(setValidating(false))
     }
-  }, [dispatch]) // <-- Se ejecuta solo una vez al montar la app
+  }, [dispatch]) 
 
   const logoutMutation = useMutation({
-// ... (resto del hook sin cambios)
-// ...
     mutationFn: () => POST(`${import.meta.env.VITE_API_URL}/auth/logout`),
     onSuccess: () => {
       Cookies.remove('token', { path: '/' })

@@ -48,8 +48,8 @@ export function LoginForm({
         navigate("/dashboard")
       }
     },
-    onError: (err: any) => {
-      let msg;
+    onError: (err: { response?: { data?: { error?: string; message?: string } }; message?: string }) => {
+      let msg: string;
       if (err.response?.data?.error === "inactiveUserError") {
         msg = t("translation.login.inactiveUserError")
       } else if (err.response?.data?.error === "badCredentialsError") {
