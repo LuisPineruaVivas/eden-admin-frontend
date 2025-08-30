@@ -2,14 +2,14 @@ import Cookies from 'js-cookie'
 import { toast } from 'sonner'
 import { RootState } from '@config/store'
 import { IUser } from '@interfaces/models'
+import { POST } from '@config/fetcher/Post'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useCallback, useEffect } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { verifyAuth } from '@config/epics/auth.epic'
 import { useSelector, useDispatch } from 'react-redux'
-import { useCallback, useEffect } from 'react'
 import { setToken, clearUser, setUser, setValidating } from '@config/store/reducers/user.slice'
-import { POST } from '@config/fetcher/Post'
 
 export function useAuth() {
   const { t } = useTranslation('common')
