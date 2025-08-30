@@ -14,6 +14,7 @@ import { LoginResponse } from "@interfaces/models"
 import { useMutation } from "@tanstack/react-query"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Card, CardContent } from "@components/ui/Card"
+import { AxiosError, AxiosResponse } from "axios"
 
 const loginSchema = z.object({
   email:    z.email({ message: "Correo inválido" }),
@@ -21,6 +22,9 @@ const loginSchema = z.object({
 })
 
 type LoginFormValues = z.infer<typeof loginSchema>
+
+type Success = { token: string; user: LoginResponse["user"] }
+type Error = { error: string; message: string }
 
 export function LoginForm({
   className,
@@ -41,14 +45,14 @@ export function LoginForm({
         `${import.meta.env.VITE_API_URL}/auth/login`,
         { email: data.email, password: data.password }
       ),
-    onSuccess: (res) => {
+    onSuccess: (res: AxiosResponse<Success>) => {
       setErrorMsg(null)
       if (res.data.token) {
         setCredentials(res.data.token, res.data.user)
         navigate("/dashboard")
       }
     },
-    onError: (err: { response?: { data?: { error?: string; message?: string } }; message?: string }) => {
+    onError: (err: AxiosError<Error>) => {
       let msg: string;
       if (err.response?.data?.error === "inactiveUserError") {
         msg = t("translation.login.inactiveUserError")

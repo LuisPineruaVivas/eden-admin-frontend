@@ -58,7 +58,7 @@ export interface IUser {
   name: string;
   email: string;
   role: Roles;
-  status: Statuses;
+  status: Statues;
   created_at: string;
   permissions: Permissions;
 }
