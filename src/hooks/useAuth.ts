@@ -21,19 +21,11 @@ export function useAuth() {
   useEffect(() => {
     const tokenFromCookie = Cookies.get('token')
     if (tokenFromCookie && !user) {
-<<<<<<< HEAD
-=======
-      
->>>>>>> c32fecca7c2ff520b48c395b76e167a4ecc96184
       dispatch(verifyAuth(tokenFromCookie))
     } else {
       dispatch(setValidating(false))
     }
-<<<<<<< HEAD
-  }, [dispatch])
-=======
   }, [dispatch]) 
->>>>>>> c32fecca7c2ff520b48c395b76e167a4ecc96184
 
   const logoutMutation = useMutation({
     mutationFn: () => POST(`${import.meta.env.VITE_API_URL}/auth/logout`),
