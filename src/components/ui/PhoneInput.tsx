@@ -1,9 +1,13 @@
 import * as React from "react";
-import { CheckIcon, ChevronsUpDown } from "lucide-react";
 import * as RPNInput from "react-phone-number-input";
+
 import flags from "react-phone-number-input/flags";
 
-import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@components/ui/Popover";
 import {
   Command,
   CommandEmpty,
@@ -11,26 +15,23 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@components/ui/Command";
+import { cn } from "@lib/utils";
+import { Input } from "@components/ui/Input";
+import { Button } from "@components/ui/Button";
 import { ScrollArea } from "@/components/ui/ScrollArea";
-import { cn } from "@/lib/utils";
+import { CheckIcon, ChevronsUpDown } from "lucide-react";
 
 type PhoneInputProps = Omit<
-  React.ComponentProps<"input">,
-  "onChange" | "value" | "ref"
+React.ComponentProps<"input">,
+"onChange" | "value" | "ref"
 > &
   Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
     onChange?: (value: RPNInput.Value) => void;
   };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
-  React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
+  React.forwardRef<React.ComponentRef<typeof RPNInput.default>, PhoneInputProps>(
     ({ className, onChange, value, ...props }, ref) => {
       return (
         <RPNInput.default
@@ -93,7 +94,7 @@ const CountrySelect = ({
     <Popover
       open={isOpen}
       modal
-      onOpenChange={(open) => {
+      onOpenChange={(open: boolean) => {
         setIsOpen(open);
         open && setSearchValue("");
       }}
@@ -121,7 +122,7 @@ const CountrySelect = ({
         <Command>
           <CommandInput
             value={searchValue}
-            onValueChange={(value) => {
+            onValueChange={(value: string) => {
               setSearchValue(value);
               setTimeout(() => {
                 if (scrollAreaRef.current) {

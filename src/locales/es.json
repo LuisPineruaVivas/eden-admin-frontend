@@ -90,9 +90,6 @@
           "cancel": "Cancelar",
           "loading": "Actualizando usuario...",
           "success": "Usuario actualizado correctamente",
-<<<<<<< HEAD
-          "error": "Error al actualizar el usuario"
-=======
           "error": "Error al actualizar el usuario",
           "name": "Nombre",
           "last_name": "Apellido",
@@ -112,7 +109,6 @@
           "role": "Rol",
           "status": "Estado",
           "close": "Cerrar"
->>>>>>> 40d04d0ee1697c30b9d2bd9b4ecb788ec3d12fef
         }
       },
       "user_table": {
