@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 import { useMutation } from '@tanstack/react-query'
 import { verifyAuth } from '@config/epics/auth.epic'
 import { useSelector, useDispatch } from 'react-redux'
-import { useCallback, useEffect, useRef } from 'react'
-import { setToken, clearUser } from '@config/store/reducers/user.slice'
+import { useCallback, useEffect } from 'react'
+import { setToken, clearUser, setUser, setValidating } from '@config/store/reducers/user.slice'
 import { POST } from '@config/fetcher/Post'
 
 export function useAuth() {
@@ -16,23 +16,18 @@ export function useAuth() {
   const { user, isValidating } = useSelector((state: RootState) => state.user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const hasVerified = useRef(false)
-  const token = Cookies.get('token') || ''
-  const isAuthenticated = !!user || !!token
-
-  const refreshUser = () => {
-    dispatch(verifyAuth(token))
-  }
+  const isAuthenticated = !!user
 
   useEffect(() => {
-    if (token && !user && !hasVerified.current) {
-      hasVerified.current = true
-      dispatch(verifyAuth(token))
+    const tokenFromCookie = Cookies.get('token')
+    if (tokenFromCookie && !user) {
+      dispatch(verifyAuth(tokenFromCookie))
+    } else {
+      dispatch(setValidating(false))
     }
-  }, [token, user, dispatch])
+  }, [dispatch])
 
   const logoutMutation = useMutation({
-    mutationKey: [token],
     mutationFn: () => POST(`${import.meta.env.VITE_API_URL}/auth/logout`),
     onSuccess: () => {
       Cookies.remove('token', { path: '/' })
@@ -66,7 +61,7 @@ export function useAuth() {
   const setCredentials = (newToken: string, newUser: IUser) => {
     Cookies.set('token', newToken, { expires: 1, path: '/' })
     dispatch(setToken(newToken))
-    dispatch({ type: 'user/setUser', payload: { user: newUser } })
+    dispatch(setUser({ user: newUser, isValidating: false })) // <-- Usar la acción
     toast.success(t('translation.login.success'), {
       description: new Date().toLocaleString(undefined, {
         dateStyle: 'full',
@@ -77,12 +72,10 @@ export function useAuth() {
 
   return {
     user,
-    token,
-    logout,
-    refreshUser,
-    isValidating,
-    setCredentials,
     isAuthenticated,
+    isValidating,
+    logout,
+    setCredentials,
   }
 }
 

@@ -13,15 +13,15 @@ import { Skeleton } from '@components/ui/Skeleton'
 
 export default function UserListTable() {
   const token = useSelector((state: RootState) => state.user.token)
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(0) // 0-based for UI, 1-based for API
   const [pageSize, setPageSize] = useState(10)
   const [roleFilter, setRoleFilter] = useState<string>()
 
-  // 1. Memoizar el fetchFn para que React-Query no lo regenere en cada render
+  // Memoized fetch function
   const fetchUsers = useCallback(() => {
     const url =
       `${import.meta.env.VITE_API_URL}/manager/users?items=${pageSize}` +
-      `&page=${pageIndex + 1}` +
+      `&page=${pageIndex + 1}` + // API expects 1-based page
       (roleFilter ? `&role=${roleFilter}` : '')
     return GET<{
       users: IUser[]
@@ -40,7 +40,6 @@ export default function UserListTable() {
   })
 
   if (isLoading) {
-    // Muestra skeletons en lugar del texto "Cargando usuarios…"
     return (
       <div className="space-y-2">
         {Array.from({ length: pageSize || 5 }).map((_, idx) => (
@@ -49,10 +48,10 @@ export default function UserListTable() {
       </div>
     )
   }
-  if (isError)   return <div>Error: {(error as Error).message}</div>
+  if (isError) return <div>Error: {(error as Error).message}</div>
 
   const userList = data!.data.users
-  const { pages } = data!.data.metadata
+  const { pages, count } = data!.data.metadata
 
   return (
     <UsersProvider>
@@ -68,6 +67,7 @@ export default function UserListTable() {
         pageSize={pageSize}
         onPageChange={setPageIndex}
         onPageSizeChange={setPageSize}
+        totalRows={count}
       />
 
       <UsersDialogs
