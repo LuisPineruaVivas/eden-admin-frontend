@@ -65,7 +65,6 @@ function App() {
                   <ErrorStackIndicator environment="debug" />
                 </ErrorManagerProvider>
                 <Toaster />
-                <Toaster />
               </ThemeProvider>
             </ConfettiProvider>
           </SearchProvider>
