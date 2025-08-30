@@ -20,8 +20,8 @@ import {
   TableRow,
 } from '@components/ui/Table'
 import { IUser } from '@interfaces/models'
-import { DataTableToolbar } from './data-table-toolbar'
-import { DataTablePagination } from './data-table-pagination'
+import { DataTableToolbar } from './DataTableToolbar'
+import { DataTablePagination } from './DataTablePagination'
 
 interface UsersTableProps {
   columns: ColumnDef<IUser>[]

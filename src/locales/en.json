@@ -13,79 +13,91 @@
       "badCredentialsError": "Invalid credentials, please check your email and password.",
       "inactiveUserError": "Inactive user, please contact the administrator for user activation."
     },
+    "common": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "deleting": "Deleting...",
+      "processing": "Processing..."
+    },
     "management": {
-      "user_list":{
-        "title": "User List",
-        "subtitle": "Here you will list and manage users and their roles",
-        "create_user": "Create New User",
-        "filter_users": "Filter users...",
-        "rows_per_page": "Rows per page",
-        "actions": "Actions",
-        "edit": "Edit User",
-        "delete": "Delete User",
-        "changeView": "Change View",
-        "list": "List",
-        "table": "Table",
-        "active": "Active",
-        "inactive": "Inactive",
-        "all": "All",
-        "role": "Role",
-        "email": "Email",
-        "name": "Name",
-        "status": "Status",
-        "options": "Options",
-        "page": "Page",
-        "of": "of",
-        "delete_success": "User deleted successfully",
-        "delete_error": "Error deleting user",
-        "no_results": "No results"
-      },
-      "user_delete_modal": {
-          "title": "Delete User",
-          "description": "Are you sure you want to delete",
-          "message": "This action will permanently delete the user with the role of",
-          "message_2": "from the system, and it will not be possible to restore it",
-          "username": "Username",
-          "cancel": "Cancel",
-          "delete": "Delete",
-          "loading": "Deleting user...",
-          "warning": "Warning!",
-          "warning_description": "Please be carefull, this operation can not be rolled back.",
-          "placeholder": "Enter username to confirm deletion"
-        },
-        "user_create_modal": {
-          "title": "Create User",
-          "description": "Create new user here",
-          "cancel": "Cancel",
-          "submit": "Save Changes",
-          "loading": "Adding user...",
-          "success": "User added successfully",
-          "error": "Error adding user",
-          "firstname": "First Name",
-          "lastname": "Last Name",
+      "user_view_dialog": {
+        "title": "View User",
+        "description": "Details for {{name}}",
+        "fields": {
+          "name": "Name",
           "email": "Email",
           "phone": "Phone",
+          "national_id": "National ID",
+          "identity": "Identity",
+          "role": "Role",
+          "status": "Status",
+          "close": "Close"
+        }
+      },
+      "user_table": {
+        "actions_label": "Options",
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete",
+        "status": "Status"
+      },
+      "user_form": {
+        "title": {
+          "add": "Add User",
+          "edit": "Edit User"
+        },
+        "description": {
+          "add": "Here you can create a new user",
+          "edit": "Here you can edit the user's information"
+        },
+        "fields": {
+          "firstName": "First Name",
+          "lastName": "Last Name",
+          "email": "Email",
+          "phone": "Phone",
+          "nationalId": "National ID",
           "role": "Role",
           "password": "Password",
-          "confirmPassword": "Confirm Password",
-          "error_name": "The name is required",
-          "error_last_name": "The last name is required",
-          "error_email": "Invalid email",
-          "error_phone": "The phone is required",
-          "error_role": "The role is required",
-          "error_password": "The password is required",
-          "network_error": "Network error"
+          "confirmPassword": "Confirm Password"
         },
-        "user_edit_modal": {
-          "title": "Edit User",
-          "description": "Edit user here",
-          "saveMsg": "Click save when you're done",
-          "cancel": "Cancel",
-          "loading": "Updating user...",
-          "success": "User updated successfully",
-          "error": "Error updating user"
+        "errors": {
+          "firstName": "First name is required",
+          "lastName": "Last name is required",
+          "emailFormat": "Invalid email format",
+          "phone": "Phone is required",
+          "nationalIdFormat": "Invalid national ID format",
+          "role": "Role is required",
+          "passwordLength": "Password must be at least 8 characters",
+          "passwordMatch": "Passwords must match"
+        },
+        "success": {
+          "add": "User added successfully",
+          "edit": "User updated successfully"
+        },
+        "error": {
+          "add": "Error adding user",
+          "edit": "Error updating user"
         }
-    },
+      },
+      "user_status_dialog": {
+        "title": "Change User Status",
+        "description": "Select new status for {{name}}",
+        "select_placeholder": "-- Select a status --",
+        "options": {
+          "active": "Active",
+          "inactive": "Inactive"
+        },
+        "success": "Status updated successfully",
+        "error": "Error updating status"
+      },
+      "user_delete_dialog": {
+        "title": "Delete user",
+        "description": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+        "success": "User deleted successfully",
+        "error": "Error deleting user"
+      }
+      },
     "layoutsError": {
       "error500": {
         "title": "Error 500",
