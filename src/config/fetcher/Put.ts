@@ -1,7 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios'
 
 interface PutResponse<T> extends AxiosResponse<T> {
-  data: T;
+  data: T
 }
 
 type PutFunction = <T>(
@@ -9,21 +9,21 @@ type PutFunction = <T>(
   body?: unknown,
   token?: string,
   headers?: Record<string, string>
-) => Promise<PutResponse<T>>;
+) => Promise<PutResponse<T>>
 
-export const PUT: PutFunction = async <T>(
+export async function PUT<T>(
   url: string,
   body?: unknown,
   token?: string,
-  headers?: Record<string, string>
-): Promise<PutResponse<T>> => {
-  const response = await axios.put<T>(url, {
-    body
-  }, {
+  headers: Record<string, string> = {}
+): Promise<PutResponse<T>> {
+  const response = await axios.put<T>(url, body, {
     headers: {
-      Authorization: `Bearer ${token}`,
-      ...headers
-    }
-  });
-  return response as PutResponse<T>;
-};
+      'Content-Type': 'application/json',
+      Authorization: token ? `Bearer ${token}` : '',
+      ...headers,
+    },
+  })
+
+  return response as PutResponse<T>
+}

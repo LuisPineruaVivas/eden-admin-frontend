@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie'
-
 import { toast } from 'sonner'
 import { RootState } from '@config/store'
 import { IUser } from '@interfaces/models'
@@ -12,10 +11,9 @@ import { useCallback, useEffect, useRef } from 'react'
 import { setToken, clearUser } from '@config/store/reducers/user.slice'
 import { POST } from '@config/fetcher/Post'
 
-export default function useAuth() {
+export function useAuth() {
   const { t } = useTranslation('common')
   const { user, isValidating } = useSelector((state: RootState) => state.user)
-  
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const hasVerified = useRef(false)
@@ -84,6 +82,8 @@ export default function useAuth() {
     refreshUser,
     isValidating,
     setCredentials,
-    isAuthenticated
+    isAuthenticated,
   }
 }
+
+export default useAuth

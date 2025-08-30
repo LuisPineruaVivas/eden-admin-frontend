@@ -13,6 +13,13 @@
         "badCredentialsError": "Credenciales inválidas, por favor verifica tu correo y contraseña.",
         "inactiveUserError": "Usuario inactivo, por favor comunicate con el administrador para la habilitación del usuario."
       },
+      "common": {
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar",
+      "deleting": "Eliminando...",
+      "processing": "Procesando..."
+    },
       "management": {
         "user_list": {
           "title": "Lista de usuarios",
@@ -83,9 +90,90 @@
           "cancel": "Cancelar",
           "loading": "Actualizando usuario...",
           "success": "Usuario actualizado correctamente",
-          "error": "Error al actualizar el usuario"
+          "error": "Error al actualizar el usuario",
+          "name": "Nombre",
+          "last_name": "Apellido",
+          "email": "Correo electrónico",
+          "phone": "Teléfono",
+          "role": "Rol"          
+        },
+        "user_view_dialog": {
+        "title": "Ver usuario",
+        "description": "Detalles de {{name}}",
+        "fields": {
+          "name": "Nombre",
+          "email": "Correo electrónico",
+          "phone": "Teléfono",
+          "national_id": "Cédula",
+          "identity": "Identidad",
+          "role": "Rol",
+          "status": "Estado",
+          "close": "Cerrar"
         }
       },
+      "user_table": {
+        "actions_label": "Opciones",
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "status": "Estado"
+      },
+      "user_form": {
+        "title": {
+          "add": "Agregar usuario",
+          "edit": "Editar usuario"
+        },
+        "description": {
+          "add": "Aquí podrás crear un nuevo usuario",
+          "edit": "Aquí podrás editar la información del usuario"
+        },
+        "fields": {
+          "firstName": "Nombre",
+          "lastName": "Apellido",
+          "email": "Correo electrónico",
+          "phone": "Teléfono",
+          "nationalId": "Cédula",
+          "role": "Rol",
+          "password": "Contraseña",
+          "confirmPassword": "Confirmar contraseña"
+        },
+        "errors": {
+          "firstName": "El nombre es requerido",
+          "lastName": "El apellido es requerido",
+          "emailFormat": "Formato de correo inválido",
+          "phone": "El teléfono es requerido",
+          "nationalIdFormat": "Formato de cédula inválido",
+          "role": "El rol es requerido",
+          "passwordLength": "La contraseña debe tener al menos 8 caracteres",
+          "passwordMatch": "Las contraseñas no coinciden"
+        },
+        "success": {
+          "add": "Usuario agregado correctamente",
+          "edit": "Usuario actualizado correctamente"
+        },
+        "error": {
+          "add": "Error al agregar el usuario",
+          "edit": "Error al editar el usuario"
+        }
+      },
+      "user_status_dialog": {
+        "title": "Cambiar estado de usuario",
+        "description": "Selecciona nuevo estado para {{name}}",
+        "select_placeholder": "-- Selecciona un estado --",
+        "options": {
+          "active": "Activo",
+          "inactive": "Inactivo"
+        },
+        "success": "Estado actualizado correctamente",
+        "error": "Error al actualizar el estado"
+      },
+      "user_delete_dialog": {
+        "title": "Eliminar usuario",
+        "description": "¿Estás seguro de que deseas eliminar a {{name}}? Esta acción no se puede deshacer.",
+        "success": "Usuario eliminado correctamente",
+        "error": "Error al eliminar el usuario"
+      }
+    },
       "layoutsError": {
        "error500":{
         "title": "Error 500",
