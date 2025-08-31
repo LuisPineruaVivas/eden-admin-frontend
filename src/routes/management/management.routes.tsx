@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import { DynamicPage } from '@lib/lazyImports';
+import { DynamicPage } from './lazyimport.management';
 import { PermissionRoute } from '@components/PermissionRoute';
 
 export const managementRoutes: RouteObject[] = [
@@ -22,6 +22,12 @@ export const managementRoutes: RouteObject[] = [
           { path: 'permissionlist', element: <DynamicPage page="managementPermissionList" /> }
         ]
       },
+      {
+        element: <PermissionRoute requiredPermission="CAN_SEE_SELLINGS_FORCE_GROUPS" />,
+        children: [
+          { path: 'groups', element: <DynamicPage page="managementGroupList" /> }
+        ]
+      }
       
 
     ]

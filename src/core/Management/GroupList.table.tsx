@@ -2,13 +2,13 @@ import { useState, useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSelector } from 'react-redux'
 import { RootState } from '@config/store'
-import { GroupsPrimaryButtons } from './components/groups-primary-buttons'
-import { GroupsTable } from './components/groups-table'
-import { groupsColumns } from './components/groups-columns'
+import { GroupsPrimaryButtons } from './components/GroupsPrimaryButtons'
+import { GroupsTable } from './components/GroupsTable'
+import { groupsColumns } from './components/GroupsColumns'
 import { mockGroups } from './data/groups'
 import { Skeleton } from '@components/ui/Skeleton'
 
-export function GroupListTable() {
+export default function GroupListTable() {
   const token = useSelector((state: RootState) => state.user.token)
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)

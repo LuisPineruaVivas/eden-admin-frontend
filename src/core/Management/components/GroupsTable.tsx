@@ -20,7 +20,8 @@ import {
   TableRow,
 } from '@components/ui/Table'
 import { IGroup } from '@interfaces/models'
-import { DataTablePagination } from './data-table-pagination'
+import { DataTablePagination } from './DataTablePagination'
+import { useTranslation } from 'react-i18next'
 
 interface GroupsTableProps {
   columns: ColumnDef<IGroup>[]
@@ -41,6 +42,7 @@ export function GroupsTable({
   onPageChange,
   onPageSizeChange,
 }: GroupsTableProps) {
+  const { t } = useTranslation('common')
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -90,10 +92,13 @@ export function GroupsTable({
                   >
                     {header.isPlaceholder
                       ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      : typeof header.column.columnDef.header === "string"
+                        ? t(`translation.management.groups_table.${header.column.columnDef.header}`)
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )
+                    }
                   </TableHead>
                 ))}
               </TableRow>

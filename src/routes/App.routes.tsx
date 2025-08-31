@@ -1,54 +1,39 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { Suspense } from 'react'
-import privateRoutes from '@/routes/private.routes'
-import publicRoutes from '@/routes/public.routes'
-import errorRoutes from '@/routes/error.routes'
-import { ProtectedRoute } from '@components/ProtectedRoute'
-import useAuth from '@/hooks/useAuth'
-import { PageSkeleton } from '@/components/ui/PageSkeleton'
-import { RouteConfig } from './types'
+import { managementRoutes } from '@routes/management/management.routes'
+import { dashboardRoutes } from '@/routes/summary/summary.routes'
+import { PageSkeleton } from '@/components/ui/PageSkeleton';
+import { DynamicPage } from '@/routes/lazyImports.app';
+import { Navigate, useRoutes } from 'react-router-dom';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import useAuth from '@/hooks/useAuth';
 
-function renderRoutes(routes: RouteConfig[]) {
-  return routes.map(({ path, element, children }, idx) => (
-    <Route 
-      key={`${path}-${idx}`} 
-      path={path} 
-      element={
-        <Suspense fallback={<PageSkeleton />}>
-          {element}
-        </Suspense>
-      }
-    >
-      {children && renderRoutes(children)}
-    </Route>
-  ))
-}
+function AppRoutes() {
+  const { isAuthenticated, isValidating } = useAuth();
 
-export default function AppRoutes() {
-  const { isAuthenticated, isValidating } = useAuth()
+  const loginElement = isAuthenticated ? (
+    <Navigate to="/dashboard" />
+  ) : (
+    <DynamicPage page="login" />
+  );
 
-  if (isValidating) {
-    return <PageSkeleton />
-  }
+  // Siempre llamamos a useRoutes, sin condicionar su invocación
+  const routes = useRoutes([
+    { path: '/login', element: loginElement },
+    {
+      element: <ProtectedRoute />,
+      children: [
+        ...dashboardRoutes,
+        ...managementRoutes,
+        { path: '/', element: <Navigate to="/dashboard" replace /> },
+        { path: '*', element: <DynamicPage page="error404" /> }
+      ]
+    },
+    { path: '/403', element: <DynamicPage page="error403" /> },
+    { path: '/401', element: <DynamicPage page="error401" /> },
+    { path: '/500', element: <DynamicPage page="error500" /> }
+  ]);
 
-  return (
-    <Routes>
-      {isAuthenticated ? (
-        <>
-          <Route element={<ProtectedRoute />}>
-            {renderRoutes(privateRoutes)}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          </Route>
-          <Route path="/login" element={<Navigate to="/dashboard" replace />} />
-        </>
-      ) : (
-        <>
-          {renderRoutes(publicRoutes)}
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </>
-      )}
-      {renderRoutes(errorRoutes)}
-    </Routes>
-  )
-}
+  // Condicionalmente renderizamos el skeleton, pero ya se llamaron todos los Hooks
+  return isValidating ? <PageSkeleton /> : routes;
+}   
+
+export default AppRoutes;

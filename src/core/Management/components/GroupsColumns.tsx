@@ -1,12 +1,12 @@
 import { IGroup } from '@interfaces/models'
-import { GroupsTableActions } from './groups-table-actions'
+import { GroupsTableActions } from './GroupsTableActions'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Avatar, AvatarImage, AvatarFallback } from '@components/ui/Avatar'
 
 export const groupsColumns: ColumnDef<IGroup>[] = [
   {
     accessorKey: 'name',
-    header: 'Nombre',
+    header: 'name',
     cell: ({ row }) => {
       const group = row.original
       return (
@@ -18,7 +18,7 @@ export const groupsColumns: ColumnDef<IGroup>[] = [
   },
   {
     accessorKey: 'supervisor',
-    header: 'Supervisado por',
+    header: 'supervisor',
     cell: ({ row }) => {
       const group = row.original
       return (
@@ -39,7 +39,7 @@ export const groupsColumns: ColumnDef<IGroup>[] = [
   },
   {
     accessorKey: 'participants',
-    header: 'Participantes',
+    header: 'participants',
     cell: ({ row }) => {
       const group = row.original
       const visibleParticipants = group.participants.slice(0, 3)
@@ -71,7 +71,7 @@ export const groupsColumns: ColumnDef<IGroup>[] = [
   },
   {
     id: 'actions',
-    header: 'Acciones',
+    header: 'actions',
     cell: ({ row }) => <GroupsTableActions group={row.original} />,
     meta: { className: 'text-right' },
   },

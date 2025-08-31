@@ -172,6 +172,16 @@
         "description": "¿Estás seguro de que deseas eliminar a {{name}}? Esta acción no se puede deshacer.",
         "success": "Usuario eliminado correctamente",
         "error": "Error al eliminar el usuario"
+      },
+      "groups_table": {
+        "name": "Nombre",
+        "supervisor": "Supervisor",
+        "participants": "Participantes",
+        "actions":"Acciones",
+        "options": "Opciones",
+        "view": "Ver",
+        "edit": "Editar",
+        "delete": "Eliminar"
       }
     },
       "layoutsError": {
