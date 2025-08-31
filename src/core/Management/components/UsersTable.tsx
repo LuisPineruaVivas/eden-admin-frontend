@@ -22,6 +22,7 @@ import {
 import { IUser } from '@interfaces/models'
 import { DataTableToolbar } from './DataTableToolbar'
 import { DataTablePagination } from './DataTablePagination'
+import { useTranslation } from 'react-i18next'
 
 interface UsersTableProps {
   columns: ColumnDef<IUser>[]
@@ -44,6 +45,7 @@ export function UsersTable({
   onPageChange,
   onPageSizeChange,
 }: UsersTableProps) {
+  const { t } = useTranslation('common')
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -94,10 +96,13 @@ export function UsersTable({
                   >
                     {header.isPlaceholder
                       ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      : typeof header.column.columnDef.header === "string"
+                        ? t(`translation.management.user_list.${header.column.columnDef.header}`)
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )
+                    }
                   </TableHead>
                 ))}
               </TableRow>

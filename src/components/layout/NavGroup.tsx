@@ -34,12 +34,14 @@ import {
   NavGroup as NavGroupType,
 } from './types'
 import { ChevronRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export function NavGroup({
   title,
   items,
   requiredPermission,
 }: NavGroupType) {
+  const { t } = useTranslation("common");
   const { state, isMobile } = useSidebar()
   const location = useLocation()
   const href = location.pathname + location.search
@@ -60,7 +62,7 @@ export function NavGroup({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{title}</SidebarGroupLabel>
+      <SidebarGroupLabel>{t(`translation.sidebar.${title}`)}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
           // Filtrar ítems sin permiso
@@ -78,19 +80,21 @@ export function NavGroup({
                 key={item.url}
                 item={{ ...item, items: visibleSub }}
                 href={href}
+                t={t}
               />
             ) : (
               <SidebarMenuCollapsible
                 key={item.url}
                 item={{ ...item, items: visibleSub }}
                 href={href}
+                t={t}
               />
             )
           }
 
           // Ítem sin sub-items
           return (
-            <SidebarMenuLink key={item.url} item={item as NavLink} href={href} />
+            <SidebarMenuLink key={item.url} item={item as NavLink} href={href} t={t} />
           )
         })}
       </SidebarMenu>
@@ -105,9 +109,11 @@ const NavBadge = ({ children }: { children: React.ReactNode }) => (
 const SidebarMenuLink = ({
   item,
   href,
+  t
 }: {
   item: NavLink
   href: string
+  t: (key: string) => string
 }) => {
   const { setOpenMobile } = useSidebar()
   return (
@@ -119,7 +125,7 @@ const SidebarMenuLink = ({
       >
         <Link to={item.url} onClick={() => setOpenMobile(false)}>
           {item.icon && <item.icon />}
-          <span>{item.title}</span>
+          <span>{t(`translation.sidebar.${item.title}`)}</span>
           {item.badge && <NavBadge>{item.badge}</NavBadge>}
         </Link>
       </SidebarMenuButton>
@@ -130,9 +136,11 @@ const SidebarMenuLink = ({
 const SidebarMenuCollapsible = ({
   item,
   href,
+  t
 }: {
   item: NavCollapsible
   href: string
+  t: (key: string) => string
 }) => {
   const { setOpenMobile } = useSidebar()
   const navigate = useNavigate()
@@ -149,7 +157,7 @@ const SidebarMenuCollapsible = ({
             tooltip={item.title}
           >
             {item.icon && <item.icon />}
-            <span>{item.title}</span>
+            <span>{t(`translation.sidebar.${item.title}`)}</span>
             {item.badge && <NavBadge>{item.badge}</NavBadge>}
             <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
           </SidebarMenuButton>
@@ -164,7 +172,7 @@ const SidebarMenuCollapsible = ({
                 >
                   <Link to={sub.url} onClick={() => setOpenMobile(false)}>
                     {sub.icon && <sub.icon />}
-                    <span>{sub.title}</span>
+                    <span>{t(`translation.sidebar.${sub.title}`)}</span>
                     {sub.badge && <NavBadge>{sub.badge}</NavBadge>}
                   </Link>
                 </SidebarMenuSubButton>
@@ -180,9 +188,11 @@ const SidebarMenuCollapsible = ({
 const SidebarMenuCollapsedDropdown = ({
   item,
   href,
+  t
 }: {
   item: NavCollapsible
   href: string
+  t: (key: string) => string
 }) => {
   const navigate = useNavigate()
   return (
@@ -195,14 +205,14 @@ const SidebarMenuCollapsedDropdown = ({
             isActive={checkIsActive(href, item)}
           >
             {item.icon && <item.icon />}
-            <span>{item.title}</span>
+            <span>{t(`translation.sidebar.${item.title}`)}</span>
             {item.badge && <NavBadge>{item.badge}</NavBadge>}
             <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
           </SidebarMenuButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" align="start" sideOffset={4}>
           <DropdownMenuLabel>
-            {item.title} {item.badge ? `(${item.badge})` : ''}
+            {t(`translation.sidebar.${item.title}`)} {item.badge ? `(${item.badge})` : ''}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {item.items.map((sub) => (
@@ -212,7 +222,7 @@ const SidebarMenuCollapsedDropdown = ({
                 className={checkIsActive(href, sub) ? 'bg-secondary' : ''}
               >
                 {sub.icon && <sub.icon />}
-                <span>{sub.title}</span>
+                <span>{t(`translation.sidebar.${sub.title}`)}</span>
                 {sub.badge && <span className="ml-auto text-xs">{sub.badge}</span>}
               </Link>
             </DropdownMenuItem>

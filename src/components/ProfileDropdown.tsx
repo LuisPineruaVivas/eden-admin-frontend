@@ -13,10 +13,12 @@ import {
 } from '@components/ui/DropdownMenu'
 import { Skeleton } from '@components/ui/Skeleton'
 import { Avatar, AvatarFallback, AvatarImage } from '@components/ui/Avatar'
+import { useTranslation } from 'react-i18next'
 
 export function ProfileDropdown() {
   const { user, logout, isValidating } = useAuth()
-  
+  const { t } = useTranslation("common");
+
   if (isValidating) {
     return (
       <div className="flex items-center gap-2 p-2">
@@ -57,7 +59,7 @@ export function ProfileDropdown() {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link to='/settings'>
-              Profile
+              {t(`translation.common.profile`)}
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
@@ -65,7 +67,7 @@ export function ProfileDropdown() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={logout} className="cursor-pointer">
-          Log out
+          {t(`translation.common.logout`)}
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>

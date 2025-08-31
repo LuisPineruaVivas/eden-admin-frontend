@@ -5,6 +5,7 @@ import { Badge } from "@components/ui/Badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/Avatar"
 import { Progress } from "@components/ui/Progress"
 import { Users, TrendingUp, FileCheck, FileX, Clock, DollarSign, Building2 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 interface Group {
   id: string
@@ -27,6 +28,7 @@ interface RecentUser {
 
 const SummaryManagement = () => {
   const [activeTab, setActiveTab] = useState("overview")
+  const { t } = useTranslation("common")
 
   // Mock data
   const groups: Group[] = [
@@ -138,45 +140,45 @@ const SummaryManagement = () => {
         <div className="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
-              <CardTitle className="text-sm font-medium">Usuarios Nuevos</CardTitle>
+              <CardTitle className="text-sm font-medium">{t(`translation.management.managementSummary.newUsers`)}</CardTitle>
               <Users className="h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">+247</div>
-              <p className="text-xs">+18.2% desde el mes pasado</p>
+              <p className="text-xs">+18.2% {t(`translation.management.managementSummary.sinceLastMonth`)}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Ingresos Totales</CardTitle>
+              <CardTitle className="text-sm font-medium">{t(`translation.management.managementSummary.totalIncome`)}</CardTitle>
               <DollarSign className="h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{formatCurrency(387500)}</div>
-              <p className="text-xs">+12.5% desde el mes pasado</p>
+              <p className="text-xs">+12.5% {t(`translation.management.managementSummary.sinceLastMonth`)}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Contratos Completados</CardTitle>
+              <CardTitle className="text-sm font-medium">{t(`translation.management.managementSummary.completedContracts`)}</CardTitle>
               <FileCheck className="h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">143</div>
-              <p className="text-xs">+8.1% desde el mes pasado</p>
+              <p className="text-xs">+8.1% {t(`translation.management.managementSummary.sinceLastMonth`)}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Rendimiento Promedio</CardTitle>
+              <CardTitle className="text-sm font-medium">{t(`translation.management.managementSummary.averagePerformance`)}</CardTitle>
               <TrendingUp className="h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">87.3%</div>
-              <p className="text-xs">+3.2% desde el mes pasado</p>
+              <p className="text-xs">+3.2% {t(`translation.management.managementSummary.sinceLastMonth`)}</p>
             </CardContent>
           </Card>
         </div>
@@ -185,8 +187,8 @@ const SummaryManagement = () => {
           {/* Chart Section */}
           <Card className="lg:col-span-2">
             <CardHeader>
-              <CardTitle>Usuarios Nuevos por Mes</CardTitle>
-              <CardDescription>Registro de nuevos usuarios en los últimos 12 meses</CardDescription>
+              <CardTitle>{t('translation.management.managementSummary.newUsersByMonth')}</CardTitle>
+              <CardDescription>{t('translation.management.managementSummary.newUsersByMonthDescription')}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-80 flex items-end justify-between space-x-2">
@@ -209,9 +211,9 @@ const SummaryManagement = () => {
           {/* Recent Users */}
           <Card>
             <CardHeader>
-              <CardTitle>Usuarios Recientes</CardTitle>
+              <CardTitle>{t(`translation.management.managementSummary.recentUsers`)}</CardTitle>
               <CardDescription>
-                Últimos usuarios registrados en el sistema
+                {t(`translation.management.managementSummary.recentUsersDescription`)}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -242,10 +244,10 @@ const SummaryManagement = () => {
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <Building2 className="h-5 w-5" />
-              <span>Rendimiento por Equipos</span>
+              <span>{t(`translation.management.managementSummary.teamsPerformance`)}</span>
             </CardTitle>
             <CardDescription>
-              Resumen de ganancias, contratos y rendimiento por equipo
+              {t(`translation.management.managementSummary.teamsPerformanceDescription`)}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -263,14 +265,14 @@ const SummaryManagement = () => {
                           : "destructive"
                       }
                     >
-                      {group.performance}% rendimiento
+                      {group.performance}% {t(`translation.management.managementSummary.performance`)}
                     </Badge>
                   </div>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                     <div className="text-center">
                       <div className="text-2xl font-bold">{formatCurrency(group.totalEarnings)}</div>
-                      <div className="text-sm">Ganancias Totales</div>
+                      <div className="text-sm">{t(`translation.management.managementSummary.totalProfit`)}</div>
                     </div>
 
                     <div className="text-center">
@@ -278,7 +280,7 @@ const SummaryManagement = () => {
                         <FileCheck className="w-5 h-5 mr-1" />
                         {group.completedContracts}
                       </div>
-                      <div className="text-sm">Completados</div>
+                      <div className="text-sm">{t(`translation.management.managementSummary.completed`)}</div>
                     </div>
 
                     <div className="text-center">
@@ -286,7 +288,7 @@ const SummaryManagement = () => {
                         <FileX className="w-5 h-5 mr-1" />
                         {group.brokenContracts}
                       </div>
-                      <div className="text-sm">Rotos</div>
+                      <div className="text-sm">{t(`translation.management.managementSummary.broken`)}</div>
                     </div>
 
                     <div className="text-center">
@@ -294,13 +296,13 @@ const SummaryManagement = () => {
                         <Clock className="w-5 h-5 mr-1" />
                         {group.pendingContracts}
                       </div>
-                      <div className="text-sm">Pendientes</div>
+                      <div className="text-sm">{t(`translation.management.managementSummary.pending`)}</div>
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span>Progreso del rendimiento</span>
+                      <span>{t(`translation.management.managementSummary.performanceProgress`)}</span>
                       <span>{group.performance}%</span>
                     </div>
                     <Progress value={group.performance} className="h-2" />
