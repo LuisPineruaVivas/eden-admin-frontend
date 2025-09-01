@@ -52,7 +52,7 @@ export function NavGroup({
     if (!perm) return true
     if (!user || !user.permissions) return false
     const roleKey = user.role.toLowerCase()
-    return (user.permissions[roleKey] || []).includes(perm)
+    return ((user.permissions as Record<string, string[]>)[roleKey] || []).includes(perm)
   }
 
   // Si el grupo requiere un permiso y el usuario no lo tiene, no renderizar nada
@@ -64,7 +64,7 @@ export function NavGroup({
     <SidebarGroup>
       <SidebarGroupLabel>{t(`translation.sidebar.${title}`)}</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => {
+        {items.map((item, index) => {
           // Filtrar ítems sin permiso
           if (!hasPermission(item.requiredPermission)) return null
 
@@ -94,7 +94,7 @@ export function NavGroup({
 
           // Ítem sin sub-items
           return (
-            <SidebarMenuLink key={item.url} item={item as NavLink} href={href} t={t} />
+            <SidebarMenuLink key={index} item={item as NavLink} href={href} t={t} />
           )
         })}
       </SidebarMenu>
@@ -153,7 +153,7 @@ const SidebarMenuCollapsible = ({
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton
-            onClick={() => navigate(item.url)}
+            onClick={() => navigate(String(item.url))}
             tooltip={item.title}
           >
             {item.icon && <item.icon />}
@@ -164,8 +164,8 @@ const SidebarMenuCollapsible = ({
         </CollapsibleTrigger>
         <CollapsibleContent className="CollapsibleContent">
           <SidebarMenuSub>
-            {item.items.map((sub) => (
-              <SidebarMenuSubItem key={sub.url}>
+            {item.items.map((sub, index) => (
+              <SidebarMenuSubItem key={index}>
                 <SidebarMenuSubButton
                   asChild
                   isActive={checkIsActive(href, sub)}
@@ -200,7 +200,7 @@ const SidebarMenuCollapsedDropdown = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <SidebarMenuButton
-            onClick={() => navigate(item.url)}
+            onClick={() => navigate(String(item.url))}
             tooltip={item.title}
             isActive={checkIsActive(href, item)}
           >
@@ -215,8 +215,8 @@ const SidebarMenuCollapsedDropdown = ({
             {t(`translation.sidebar.${item.title}`)} {item.badge ? `(${item.badge})` : ''}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {item.items.map((sub) => (
-            <DropdownMenuItem key={sub.url} asChild>
+          {item.items.map((sub, index) => (
+            <DropdownMenuItem key={index} asChild>
               <Link
                 to={sub.url}
                 className={checkIsActive(href, sub) ? 'bg-secondary' : ''}

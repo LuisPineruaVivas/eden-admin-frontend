@@ -1,4 +1,3 @@
-import React from 'react'
 import { useAuth } from '@hooks/useAuth'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
@@ -15,18 +14,19 @@ interface Props {
 }
 
 export function UsersDeleteDialog({ open, onOpenChange, currentRow }: Props) {
+  const qc = useQueryClient()
+  
   const { token } = useAuth()
   const { t } = useTranslation('common')
-  const qc = useQueryClient()
-
-  const { mutate: deleteUser, isLoading } = useMutation({
+  
+  const { mutate: deleteUser, isPending } = useMutation({
     mutationFn: () =>
       Delete(
         `${import.meta.env.VITE_API_URL}/manager/users/${currentRow.id}`,
         token
       ),
     onSuccess: () => {
-      qc.invalidateQueries(['users', token])
+      qc.invalidateQueries({ queryKey: ['users', token] })
       toast.success(t('translation.management.user_delete_dialog.success'))
       onOpenChange(false)
     },
@@ -47,10 +47,10 @@ export function UsersDeleteDialog({ open, onOpenChange, currentRow }: Props) {
       }
       desc={t('translation.management.user_delete_dialog.description', { name: currentRow.name })}
       cancelBtnText={t('translation.common.cancel')}
-      confirmText={isLoading ? t('translation.common.deleting') : t('translation.common.confirm')}
+      confirmText={isPending ? t('translation.common.deleting') : t('translation.common.confirm')}
       destructive
       handleConfirm={() => deleteUser()}
-      isLoading={isLoading}
+      isLoading={isPending}
     />
   )
 }

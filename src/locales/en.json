@@ -173,6 +173,16 @@
         "description": "Are you sure you want to delete {{name}}? This action cannot be undone.",
         "success": "User deleted successfully",
         "error": "Error deleting user"
+      },
+      "groups_table": {
+        "name":"Name",
+        "supervisor":"Supervisor",
+        "participants":"Participants",
+        "actions": "Actions",
+        "options": "Options",
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
       }
       },
     "layoutsError": {

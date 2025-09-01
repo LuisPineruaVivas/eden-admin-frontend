@@ -32,14 +32,14 @@ import { toast } from 'sonner'
 import { POST } from '@config/fetcher/Post'
 import { PUT } from '@config/fetcher/Put'
 import { cn } from '@lib/utils'
-import type { User } from '../data/schema'
 import { userTypes } from '../data/data'
+import { IUser } from '@/interface/models'
 
 function TFormMessage({ className, children, ...props }: React.ComponentProps<'p'>) {
   const { error, formMessageId } = useFormField()
   const { t } = useTranslation('common')
 
-  let body: React.ReactNode | null =
+  const body: React.ReactNode | null =
     children ?? (error ? String(error?.message ?? '') : null)
 
   if (!body) return null
@@ -66,11 +66,11 @@ const formSchema = z
   .object({
     firstName: z.string().min(1, { message: 'translation.management.user_form.errors.firstName' }),
     lastName: z.string().min(1, { message: 'translation.management.user_form.errors.lastName' }),
-    email: z.string().email({ message: 'translation.management.user_form.errors.emailFormat' }),
+    email: z.email({ message: 'translation.management.user_form.errors.emailFormat' }),
     phone: z.string().min(1, { message: 'translation.management.user_form.errors.phone' }),
     nationalId: z
       .string()
-      .regex(/^[vVeE]-\d+$/, { message: 'translation.management.user_form.errors.nationalIdFormat' }),
+      .regex(/^[VE]-\d+$/, { message: 'translation.management.user_form.errors.nationalIdFormat' }),
     role: z.string(),
     password: z.string(),
     confirmPassword: z.string(),
@@ -80,14 +80,17 @@ const formSchema = z
     if (!isEdit || password) {
       if (password.length < 8) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "invalid_format",
+          format: "custom",
           message: 'translation.management.user_form.errors.passwordLength',
           path: ['password'],
         })
       }
       if (password !== confirmPassword) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "unrecognized_keys",
+          format: "custom",
+          keys: [],
           message: 'translation.management.user_form.errors.passwordMatch',
           path: ['confirmPassword'],
         })
@@ -95,7 +98,8 @@ const formSchema = z
     }
     if (password && !confirmPassword) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "invalid_format",
+        format: "custom",
         message: 'translation.management.user_form.errors.passwordMatch',
         path: ['confirmPassword'],
       })
@@ -105,7 +109,7 @@ const formSchema = z
 type UserForm = z.infer<typeof formSchema>
 
 interface Props {
-  currentRow?: User
+  currentRow?: IUser
   open: boolean
   onOpenChange: (open: boolean) => void
   pageIndex: number
@@ -140,10 +144,10 @@ export function UsersActionDialog({
 }: Props) {
   const { t } = useTranslation('common')
   const { token } = useAuth()
-  const { user } = useUser()
+  const { whichRole } = useUser()
   const queryClient = useQueryClient()
-  const isManager = user.role === 'manager'
-  const allowedRoles = !currentRow && isManager ? userTypes.filter((r) => [3, 4, 5].includes(r.value)) : userTypes
+  const isManager = whichRole('manager')
+  const allowedRoles = !currentRow && isManager ? userTypes.filter((r) => ['supervisor', 'seller', 'customer'].includes(r.value)) : userTypes
 
   const isEdit = Boolean(currentRow)
   const form = useForm<UserForm>({
@@ -184,7 +188,7 @@ export function UsersActionDialog({
         email: currentRow.email,
         phone: unformatPhone(currentRow.phone),
         nationalId: currentRow.national_id,
-        role: String(allowedRoles.find((r) => r.value === currentRow.role)?.value ?? ''),
+        role: currentRow.role,
         password: '',
         confirmPassword: '',
         isEdit: true,
@@ -229,7 +233,7 @@ export function UsersActionDialog({
     },
     onSuccess: () => {
       toast.success(t(isEdit ? 'translation.management.user_form.success.edit' : 'translation.management.user_form.success.add'))
-      queryClient.invalidateQueries(['users', token, pageIndex, pageSize, roleFilter])
+      queryClient.invalidateQueries({ queryKey: ['users', token, pageIndex, pageSize, roleFilter] })
       form.reset()
       onOpenChange(false)
     },
@@ -344,7 +348,7 @@ export function UsersActionDialog({
                     <FormLabel>{t('translation.management.user_form.fields.role')}</FormLabel>
                     <FormControl>
                       <SelectDropdown
-                        value={field.value}
+                        defaultValue={field.value}
                         onValueChange={field.onChange}
                         items={allowedRoles.map((r) => ({ label: r.label, value: String(r.value) }))}
                       />

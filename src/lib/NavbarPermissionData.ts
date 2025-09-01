@@ -39,8 +39,8 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-    title: 'Management',
-    requiredPermission: 'CAN_SEE_USERS',
+      title: 'Management',
+      requiredPermission: 'CAN_SEE_USERS',
       items: [
         {
           title: 'Users',
@@ -59,6 +59,12 @@ export const sidebarData: SidebarData = {
               url: '/management/permissionlist',
               requiredPermission: 'CAN_SEE_USERS'
             },
+            // {
+            //   title: 'Group List',
+            //   icon: LayoutList,
+            //   url: '/management/groups',
+            //   requiredPermission: 'CAN_SEE_SELLINGS_FORCE_GROUPS'
+            // }
           ],
         },
       ],

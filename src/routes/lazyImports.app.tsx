@@ -6,16 +6,7 @@ const createPageLoader = (importFn: () => Promise<{ default: React.ComponentType
 
 const pageMap: Record<string, () => Promise<{ default: React.ComponentType }>> = {
   
-  //Entradas publicas
   login: () => import('@pages/Login/index'),
-
-  //Dashboard Summary
-  summary: () => import('@pages/Summary/index'),
-  
-  //Modulo de
-  managementSummary: () => import('@pages/Management/index'),
-  managementUserList: () => import('@core/Management/UserList.table'),
-  managementPermissionList: () => import('@core/Management/UserPermission.table'),
 
   //Layouts de errores.
   error401: () => import('@layouts/401'),
@@ -28,4 +19,3 @@ export const DynamicPage = ({ page }: { page: keyof typeof pageMap }) => {
   const PageComponent = createPageLoader(pageMap[page])
   return <PageComponent />
 }
-
