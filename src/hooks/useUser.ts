@@ -19,19 +19,23 @@ function useUser() {
   };
 
   const authUpdate = (user: IUser, token?: string) => {
-    dispatch(setUser({user}));
+    dispatch(setUser({ user, isValidating: false }));
     if (token) dispatch(setToken(token));
   };
 
   const update = (user: IUser) => {
-    dispatch(setUser({user}));
+    dispatch(setUser({ user, isValidating: false }));
   };
 
   const setAvatar = (avatar: string | null) => {
     dispatch(setProfilePicture(avatar))
   };
 
-  return { user, clear, update, authUpdate, setAvatar };
+  const whichRole = (roleSelected: string) => {
+    user?.role === roleSelected
+  }
+
+  return { user, whichRole, clear, update, authUpdate, setAvatar };
 }
 
 export default useUser;

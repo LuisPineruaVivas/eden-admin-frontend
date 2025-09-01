@@ -15,7 +15,6 @@ function AppRoutes() {
     <DynamicPage page="login" />
   );
 
-  // Siempre llamamos a useRoutes, sin condicionar su invocación
   const routes = useRoutes([
     { path: '/login', element: loginElement },
     {
@@ -32,7 +31,6 @@ function AppRoutes() {
     { path: '/500', element: <DynamicPage page="error500" /> }
   ]);
 
-  // Condicionalmente renderizamos el skeleton, pero ya se llamaron todos los Hooks
   return isValidating ? <PageSkeleton /> : routes;
 }   
 

@@ -16,6 +16,7 @@ interface BaseNavItem {
   title: string
   badge?: string
   icon?: React.ElementType
+  requiredPermission?: string
 }
 
 type NavLink = BaseNavItem & {
@@ -33,6 +34,7 @@ type NavItem = NavCollapsible | NavLink
 interface NavGroup {
   title: string
   items: NavItem[]
+  requiredPermission: string
 }
 
 interface SidebarData {

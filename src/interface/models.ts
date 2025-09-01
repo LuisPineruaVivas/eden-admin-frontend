@@ -57,6 +57,8 @@ export interface IUser {
   avatar: string | null;
   name: string;
   email: string;
+  phone: string;
+  national_id: string;
   role: Roles;
   status: Statues;
   created_at: string;

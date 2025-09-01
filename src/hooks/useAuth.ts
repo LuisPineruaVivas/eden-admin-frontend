@@ -18,10 +18,11 @@ export function useAuth() {
   const dispatch = useDispatch()
   const isAuthenticated = !!user
 
+  const token = Cookies.get('token')
+
   useEffect(() => {
-    const tokenFromCookie = Cookies.get('token')
-    if (tokenFromCookie && !user) {
-      dispatch(verifyAuth(tokenFromCookie))
+    if (token && !user) {
+      dispatch(verifyAuth(token))
     } else {
       dispatch(setValidating(false))
     }
@@ -72,10 +73,11 @@ export function useAuth() {
 
   return {
     user,
-    isAuthenticated,
-    isValidating,
+    token,
     logout,
+    isValidating,
     setCredentials,
+    isAuthenticated,
   }
 }
 
