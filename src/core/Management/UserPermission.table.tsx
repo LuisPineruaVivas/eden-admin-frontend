@@ -3,6 +3,7 @@ import { Search } from "lucide-react"
 import { Badge } from "@components/ui/Badge"
 import { Input } from "@components/ui/Input"
 import { Button } from "@components/ui/Button"
+import { useTranslation } from "react-i18next"
 
 interface Permission {
   name: string
@@ -24,6 +25,7 @@ interface Role {
 const PermissionsPage = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
+  const { t } = useTranslation("common")
 
   const roles: Role[] = [
     { id: 1, name: "Super Admin", color: "bg-red-100 text-red-800", description: "Acceso completo al sistema" },
@@ -298,10 +300,9 @@ const PermissionsPage = () => {
       <main className="flex-1 p-6">
         {/* Introduction */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Permisos del Sistema</h2>
+          <h2 className="text-xl font-semibold mb-4">{t('translation.management.permission_table.title')}</h2>
           <p className="text-gray-600 mb-6">
-            Sistema de control de acceso basado en roles. Cada permiso define una acción específica que puede realizar
-            un usuario según su rol asignado.
+            {t('translation.management.permission_table.description')}
           </p>
 
           {/* Filters */}
@@ -310,7 +311,7 @@ const PermissionsPage = () => {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
-                  placeholder="Buscar permisos..."
+                  placeholder={t('translation.management.permission_table.searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10"
@@ -339,19 +340,19 @@ const PermissionsPage = () => {
               <thead className=" border-b">
                 <tr>
                   <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 w-48">
-                    Nombre
+                    {t('translation.management.permission_table.name')}
                   </th>
                   <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 w-32">
-                    Tipo
+                    {t('translation.management.permission_table.type')}
                   </th>
                   <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600">
-                    Descripción
+                    {t('translation.management.permission_table.permissionDescription')}
                   </th>
                   <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 w-48">
-                    Ejemplo
+                    {t('translation.management.permission_table.example')}
                   </th>
                   <th className="text-left py-3 px-4 font-medium text-gray-900 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-600 w-32">
-                    Rol
+                    {t('translation.management.permission_table.role')}
                   </th>
                 </tr>
               </thead>

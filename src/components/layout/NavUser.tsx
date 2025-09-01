@@ -26,9 +26,11 @@ import {
   DropdownMenuSeparator,
 } from '@components/ui/DropdownMenu'
 import { Skeleton } from '@components/ui/Skeleton'
+import { useTranslation } from 'react-i18next'
 
 
 export function NavUser() {
+  const { t } = useTranslation("common");
   const { isMobile } = useSidebar()
   const { user, logout, isValidating } = useAuth()
 
@@ -92,14 +94,14 @@ export function NavUser() {
               <DropdownMenuItem asChild>
                 <Link to='/settings/account'>
                   <BadgeCheck />
-                  Account
+                  {t(`translation.common.profile`)}
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout} className="cursor-pointer">
               <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
+              <span>{t(`translation.common.logout`)}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

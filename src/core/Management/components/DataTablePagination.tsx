@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@components/ui/Select'
+import { useTranslation } from 'react-i18next'
 
 interface DataTablePaginationProps {
   totalRows: number
@@ -23,6 +24,7 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
   const [searchParams, setSearchParams] = useSearchParams()
   const pageIndex = Number(searchParams.get('page') || '0')
   const pageSize = Number(searchParams.get('pageSize') || '10')
+  const { t } = useTranslation('common')
 
   // Asegura que totalRows y pageSize sean válidos para evitar NaN
   const safeTotalRows = Number.isFinite(totalRows) && totalRows > 0 ? totalRows : 0
@@ -52,11 +54,11 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
       style={{ overflowClipMargin: 1 }}
     >
       <div className='text-muted-foreground hidden flex-1 text-sm sm:block'>
-        {selectedRows} of {safeTotalRows} row(s) selected.
+        {selectedRows} {t('translation.management.user_list.of')} {safeTotalRows} {t('translation.management.user_list.selected')}.
       </div>
       <div className='flex items-center sm:space-x-6 lg:space-x-8'>
         <div className='flex items-center space-x-2'>
-          <p className='hidden text-sm font-medium sm:block'>Rows per page</p>
+          <p className='hidden text-sm font-medium sm:block'>{t('translation.management.user_list.rowsPerPage')}</p>
           <Select value={`${safePageSize}`} onValueChange={(value) => setPageSize(Number(value))}>
             <SelectTrigger className='h-8 w-[70px]'>
               <SelectValue placeholder={`${safePageSize}`} />
@@ -71,7 +73,7 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
           </Select>
         </div>
         <div className='flex w-[100px] items-center justify-center text-sm font-medium'>
-          Page {pageIndex + 1} of {pageCount}
+          {t('translation.management.user_list.page')} {pageIndex + 1} {t('translation.management.user_list.of')} {pageCount}
         </div>
         <div className='flex items-center space-x-2'>
           <Button
@@ -80,7 +82,7 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
             onClick={() => setPageIndex(0)}
             disabled={!canPreviousPage}
           >
-            <span className='sr-only'>Go to first page</span>
+            <span className='sr-only'>{t('translation.management.user_list.goToFirstPage')}</span>
             <ChevronsLeft className='h-4 w-4' />
           </Button>
           <Button
@@ -89,7 +91,7 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
             onClick={() => setPageIndex(pageIndex - 1)}
             disabled={!canPreviousPage}
           >
-            <span className='sr-only'>Go to previous page</span>
+            <span className='sr-only'>{t('translation.management.user_list.goToPreviousPage')}</span>
             <ChevronLeft className='h-4 w-4' />
           </Button>
           <Button
@@ -98,7 +100,7 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
             onClick={() => setPageIndex(pageIndex + 1)}
             disabled={!canNextPage}
           >
-            <span className='sr-only'>Go to next page</span>
+            <span className='sr-only'>{t('translation.management.user_list.goToNextPage')}</span>
             <ChevronRight className='h-4 w-4' />
           </Button>
           <Button
@@ -107,7 +109,7 @@ export function DataTablePagination({ totalRows, selectedRows }: DataTablePagina
             onClick={() => setPageIndex(pageCount - 1)}
             disabled={!canNextPage}
           >
-            <span className='sr-only'>Go to last page</span>
+            <span className='sr-only'>{t('translation.management.user_list.goToLastPage')}</span>
             <ChevronsRight className='h-4 w-4' />
           </Button>
         </div>

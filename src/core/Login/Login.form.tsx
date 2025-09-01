@@ -16,16 +16,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Card, CardContent } from "@components/ui/Card"
 import { AxiosError, AxiosResponse } from "axios"
 
-const loginSchema = z.object({
-  email:    z.email({ message: "Correo inválido" }),
-  password: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
-})
-
-type LoginFormValues = z.infer<typeof loginSchema>
-
-type Success = { token: string; user: LoginResponse["user"] }
-type Error = { error: string; message: string }
-
 export function LoginForm({
   className,
   ...props
@@ -35,9 +25,19 @@ export function LoginForm({
   const { setCredentials } = useAuth()
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema)
+  const loginSchema = z.object({
+    email:    z.email({ message: t("translation.login.invalidEmail") }),
+    password: z.string().min(6, { message: t("translation.login.passwordTooShort") }),
   })
+
+  type LoginFormValues = z.infer<typeof loginSchema>
+
+  type Success = { token: string; user: LoginResponse["user"] }
+  type Error = { error: string; message: string }
+
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
+      resolver: zodResolver(loginSchema)
+    })
 
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: (data: LoginFormValues) =>
